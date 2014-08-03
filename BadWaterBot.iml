@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="javaeeApplication" name="javaEEApplication">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="application.xml" url="file://$MODULE_DIR$/META-INF/application.xml" />
+        </descriptors>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../Libs/JavaLibs">
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-migrator/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-ext/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-log4j12/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/jul-to-slf4j/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-api/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/integration/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-nop/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/log4j-over-slf4j/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-log4j12/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-ext/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-jcl/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/log4j-over-slf4j/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/jcl-over-slf4j/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-simple/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-jdk14/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-jcl/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-api/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-jdk14/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/osgi-over-slf4j/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-nop/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/jcl-over-slf4j/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-migrator/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/jul-to-slf4j/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../Libs/JavaLibs/slf4j-1/slf4j-1.7.7/slf4j-simple/src/main/java" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.pircbotx:pircbotx:2.0.1" level="project" />
+  </component>
+</module>
+
