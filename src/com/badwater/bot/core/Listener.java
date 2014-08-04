@@ -21,10 +21,11 @@ public class Listener extends ListenerAdapter {
 	public void onMessage(MessageEvent e) throws Exception {
 
 		if ( !e.getMessage ().startsWith ( prefix ) ) {
-			System.out.println(e.getMessage());
+			String msg = e.getUser ().getNick () + ": " + e.getMessage ();
+			System.out.println ( msg );
 			return;
 		}
-		for ( Command cmd  : commands ) {
+		for ( Command cmd : commands ) {
 			if ( e.getMessage ().equalsIgnoreCase ( prefix + cmd.getAlias () ) ) {
 				cmd.exec ( e );
 			}

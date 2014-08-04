@@ -12,18 +12,34 @@ import java.io.IOException;
 public class BadwaterBot extends BadwaterBotCore {
 
 	public BadwaterBot(String name,
-	                   String login,
+	                   String login, String password,
 	                   String server,
-	                   String channel,
+	                   String channel, Listener listener,
 	                   boolean autoNickChange,
 	                   boolean capEnabled) throws IOException, IrcException {
-		this.config = new Configuration.Builder ().setName ( name )
-		                                          .setLogin ( login )
-		                                          .setAutoNickChange ( autoNickChange )
-		                                          .setCapEnabled ( capEnabled )
-		                                          .setServerHostname ( server )
-		                                          .addAutoJoinChannel ( channel )
-		                                          .buildConfiguration ();
+
+		if ( password != null ) {
+			System.out.println ( "Password does not equal null, Logging In" );
+			this.config = new Configuration.Builder ().setName ( name )
+			                                          .setLogin ( login )
+			                                          .setNickservPassword ( password )
+			                                          .setAutoNickChange ( autoNickChange )
+			                                          .setCapEnabled ( capEnabled )
+			                                          .setServerHostname ( server )
+			                                          .addAutoJoinChannel ( channel )
+			                                          .addListener ( listener )
+			                                          .buildConfiguration ();
+		}
+		else {
+			this.config = new Configuration.Builder ().setName ( name )
+			                                          .setLogin ( login )
+			                                          .setAutoNickChange ( autoNickChange )
+			                                          .setCapEnabled ( capEnabled )
+			                                          .setServerHostname ( server )
+			                                          .addAutoJoinChannel ( channel )
+			                                          .addListener ( listener )
+			                                          .buildConfiguration ();
+		}
 
 		this.bot = new PircBotX ( config );
 

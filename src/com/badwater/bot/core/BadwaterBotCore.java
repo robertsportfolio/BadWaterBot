@@ -16,11 +16,12 @@ public abstract class BadwaterBotCore {
 	protected UUID id;
 	protected String name;
 	protected String login;
+	protected String password;
 	protected String server;
 	protected String channel;
 	protected boolean autoNickChange;
 	protected boolean capEnabled;
-
+	protected Listener listener;
 
 	protected Configuration config;
 

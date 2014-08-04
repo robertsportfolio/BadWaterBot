@@ -1,6 +1,6 @@
 package com.badwater.bot.main;
 
-import com.badwater.bot.core.BadwaterBotManager;
+import com.badwater.bot.core.BadwaterBot;
 import com.badwater.bot.core.Listener;
 import org.pircbotx.exception.IrcException;
 
@@ -11,14 +11,10 @@ import java.io.IOException;
  */
 public class Main {
 	public static void main(String[] args) throws IOException, IrcException {
-		BadwaterBotManager manager =
-			   new BadwaterBotManager ( "Badwater_Manager", "bwManager", "irc.freenode.net", "#badwater", true,
-	                       false );
-
-		manager.run ();
-		Listener l = new Listener ();
-		manager.addManagedBot ( "BadWater_Bill", "BWBIL","irc.freenode.org","#badwater",false,false );
-		manager.startManagedBot ( "BadWater_Bill" );
+		BadwaterBot BadWaterBill =
+			   new BadwaterBot ( "Badwater_Bill", "bwBill", "givem3thecookie", "irc.freenode.net", "#badwater",
+			                     new Listener (), false, false );
+		BadWaterBill.run ();
 
 	}
 }
