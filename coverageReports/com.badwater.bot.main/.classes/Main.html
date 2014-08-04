@@ -58,10 +58,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    16.7%
+    75%
   </span>
   <span class="absValue">
-    (1/ 6)
+    (3/ 4)
   </span>
 </td>
 </tr>
@@ -74,30 +74,30 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.badwater.bot.main;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import com.badwater.bot.core.BadwaterBotManager;
-<i>4</i>&nbsp;import org.pircbotx.exception.IrcException;
-<i>5</i>&nbsp;
-<i>6</i>&nbsp;import java.io.IOException;
-<i>7</i>&nbsp;
-<i>8</i>&nbsp;/**
-<i>9</i>&nbsp; * Created by irinix on 8/3/14.
-<i>10</i>&nbsp; */
-<b class="nc"><i>11</i>&nbsp;public class Main {</b>
-<i>12</i>&nbsp;	public static void main(String[] args) throws IOException, IrcException {
-<b class="fc"><i>13</i>&nbsp;		BadwaterBotManager manager =</b>
-<i>14</i>&nbsp;			   new BadwaterBotManager ( &quot;Badwater_Manager&quot;, &quot;bwManager&quot;, &quot;irc.freenode.net&quot;, &quot;#badwater&quot;, true,
-<i>15</i>&nbsp;			                            false );
-<b class="nc"><i>16</i>&nbsp;		manager.run ();</b>
-<b class="nc"><i>17</i>&nbsp;		manager.addManagedBot ( &quot;BadWater_Bill&quot;, &quot;BWBIL&quot;,&quot;irc.freenode.org&quot;,&quot;#badwater&quot;,false,false );</b>
-<b class="nc"><i>18</i>&nbsp;		manager.startManagedBot ( &quot;BadWater_Bill&quot; );</b>
-<b class="nc"><i>19</i>&nbsp;	}</b>
+<i>3</i>&nbsp;import com.badwater.bot.core.BadwaterBot;
+<i>4</i>&nbsp;import com.badwater.bot.core.Listener;
+<i>5</i>&nbsp;import org.pircbotx.exception.IrcException;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Created by irinix on 8/3/14.
+<i>11</i>&nbsp; */
+<b class="nc"><i>12</i>&nbsp;public class Main {</b>
+<i>13</i>&nbsp;	public static void main(String[] args) throws IOException, IrcException {
+<b class="fc"><i>14</i>&nbsp;		BadwaterBot BadWaterBill =</b>
+<i>15</i>&nbsp;			   new BadwaterBot ( &quot;Badwater_Bill&quot;, &quot;bwBill&quot;, &quot;givem3thecookie&quot;, &quot;barjavel.freenode.net&quot;, &quot;#badwater&quot;,
+<i>16</i>&nbsp;			                     new Listener (), false, false );
+<b class="fc"><i>17</i>&nbsp;		BadWaterBill.run ();</b>
+<i>18</i>&nbsp;
+<b class="fc"><i>19</i>&nbsp;	}</b>
 <i>20</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2014-08-03 02:30</div>
+    <div style="float:right;">generated on 2014-08-04 03:29</div>
 </div>
 </body>
 </html>

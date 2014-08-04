@@ -53,7 +53,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 1)
+    (0/ 2)
   </span>
 </td>
 <td class="coverageStat">
@@ -61,7 +61,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 1)
+    (0/ 2)
   </span>
 </td>
 </tr>
@@ -74,17 +74,29 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.badwater.bot.managerCommands;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;/**
-<i>4</i>&nbsp; * Created by irinix on 8/3/14.
-<i>5</i>&nbsp; */
-<b class="nc"><i>6</i>&nbsp;public class ManagerCommands {</b>
-<i>7</i>&nbsp;}
+<i>3</i>&nbsp;import com.badwater.bot.commands.Command;
+<i>4</i>&nbsp;import org.pircbotx.hooks.events.MessageEvent;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Created by irinix on 8/3/14.
+<i>8</i>&nbsp; */
+<b class="nc"><i>9</i>&nbsp;public class ManagerCommands implements Command&lt;MessageEvent&gt; {</b>
+<i>10</i>&nbsp;	@Override
+<i>11</i>&nbsp;	public void exec(MessageEvent event) throws Exception {
+<i>12</i>&nbsp;		
+<i>13</i>&nbsp;	}
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;	@Override
+<i>16</i>&nbsp;	public String getAlias() {
+<b class="nc"><i>17</i>&nbsp;		return null;</b>
+<i>18</i>&nbsp;	}
+<i>19</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2014-08-03 02:30</div>
+    <div style="float:right;">generated on 2014-08-04 03:29</div>
 </div>
 </body>
 </html>

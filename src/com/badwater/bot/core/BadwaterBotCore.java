@@ -5,7 +5,6 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * Created by irinix on 8/2/14.
@@ -13,22 +12,13 @@ import java.util.UUID;
 public abstract class BadwaterBotCore {
 	protected PircBotX bot;
 
-	protected UUID id;
-	protected String name;
-	protected String login;
-	protected String password;
-	protected String server;
-	protected String channel;
-	protected boolean autoNickChange;
-	protected boolean capEnabled;
-	protected Listener listener;
 
 	protected Configuration config;
 
 
-	public String getName() {
+	public void getName() {
 
-		return name;
+
 	}
 
 	public void run() throws IOException, IrcException {
@@ -36,16 +26,13 @@ public abstract class BadwaterBotCore {
 		bot.startBot ();
 	}
 
-	public void die(String sender) throws Throwable {
+	public void die(String sender) {
 		bot.sendIRC ().message ( sender, "Okay, I'll Go Away Now!" );
 		bot.sendIRC ().quitServer ( "Was Told To Go Away By" + sender );
 		bot.stopBotReconnect ();
 	}
 
-	public UUID getID() {
 
-		return id;
-	}
 }
 
 

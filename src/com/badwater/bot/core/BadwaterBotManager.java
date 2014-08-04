@@ -40,31 +40,24 @@ public class BadwaterBotManager extends BadwaterBotCore {
 		bot.startBot ();
 	}
 
-	public void addManagedBot(String name,
-	                          String login,
-	                          String password,
-	                          String server,
-	                          String channel,
-	                          boolean autoNickChange,
-	                          boolean capEnabled) throws IOException, IrcException {
+	public void addManagedBot(BadwaterBot bot) throws IOException, IrcException {
 		if ( ManagedBots.isEmpty () ) {
 			//just add the new bot
-			ManagedBots.add (
-				   new BadwaterBot ( name, login, password, server, channel, new Listener (), autoNickChange,
-				                     capEnabled ) );
+			ManagedBots.add ( bot );
 		}
 		else {
 			for ( BadwaterBot b : ManagedBots ) {
-				if ( !b.bot.getNick ().equalsIgnoreCase ( name ) ) {
+				if ( !b.bot.equals ( bot ) ) {
 					ManagedBots.add ( b );
 				}
 				else {
+
 					return;
 				}
 			}
 		}
 	}
-
+	/*
 	public void startManagedBot(String name) throws IOException, IrcException {
 		if ( !ManagedBots.isEmpty () ) {
 			for ( BadwaterBot b : ManagedBots ) {
@@ -78,11 +71,11 @@ public class BadwaterBotManager extends BadwaterBotCore {
 	public void removeManagedBot(String name) throws Throwable {
 		for ( BadwaterBot b : ManagedBots ) {
 			if ( b.getName ().equalsIgnoreCase ( name ) ) {
-				b.die ( this.getName () );
+
 				ManagedBots.remove ( b );
 			}
 		}
 	}
-
+	*/
 
 }

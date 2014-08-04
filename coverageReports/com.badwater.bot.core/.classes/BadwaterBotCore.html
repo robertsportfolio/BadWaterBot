@@ -50,18 +50,18 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    50%
   </span>
   <span class="absValue">
-    (1/ 5)
+    (2/ 4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    37.5%
   </span>
   <span class="absValue">
-    (2/ 10)
+    (3/ 8)
   </span>
 </td>
 </tr>
@@ -76,63 +76,48 @@
 <i>2</i>&nbsp;
 <i>3</i>&nbsp;import org.pircbotx.Configuration;
 <i>4</i>&nbsp;import org.pircbotx.PircBotX;
-<i>5</i>&nbsp;import com.badwater.bot.commands.*;
-<i>6</i>&nbsp;import org.pircbotx.exception.IrcException;
-<i>7</i>&nbsp;
-<i>8</i>&nbsp;import java.io.IOException;
-<i>9</i>&nbsp;import java.util.UUID;
-<i>10</i>&nbsp;
-<i>11</i>&nbsp;/**
-<i>12</i>&nbsp; * Created by irinix on 8/2/14.
-<i>13</i>&nbsp; */
-<b class="fc"><i>14</i>&nbsp;public abstract class BadwaterBotCore {</b>
-<i>15</i>&nbsp;	protected PircBotX bot;
+<i>5</i>&nbsp;import org.pircbotx.exception.IrcException;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;import java.util.UUID;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Created by irinix on 8/2/14.
+<i>12</i>&nbsp; */
+<b class="fc"><i>13</i>&nbsp;public abstract class BadwaterBotCore {</b>
+<i>14</i>&nbsp;	protected PircBotX bot;
+<i>15</i>&nbsp;
 <i>16</i>&nbsp;
-<i>17</i>&nbsp;	protected UUID id;
-<i>18</i>&nbsp;	protected String name;
-<i>19</i>&nbsp;	protected String login;
-<i>20</i>&nbsp;	protected String server;
-<i>21</i>&nbsp;	protected String channel;
-<i>22</i>&nbsp;	protected boolean autoNickChange;
-<i>23</i>&nbsp;	protected boolean capEnabled;
-<i>24</i>&nbsp;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;	protected Configuration config;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;	public void getName() {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;	}</b>
 <i>25</i>&nbsp;
-<b class="fc"><i>26</i>&nbsp;	protected Configuration config = new Configuration.Builder ().setName ( name )</b>
-<i>27</i>&nbsp;	                                                             .setLogin ( login )
-<i>28</i>&nbsp;	                                                             .setAutoNickChange ( autoNickChange )
-<i>29</i>&nbsp;	                                                             .setCapEnabled ( capEnabled )
-<i>30</i>&nbsp;	                                                             .setServerHostname ( server )
-<i>31</i>&nbsp;	                                                             .addAutoJoinChannel ( channel )
-<i>32</i>&nbsp;	                                                             .buildConfiguration ();
-<i>33</i>&nbsp;
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;
-<i>36</i>&nbsp;	public String getName(){
-<b class="nc"><i>37</i>&nbsp;		return name;</b>
-<i>38</i>&nbsp;	}
+<i>26</i>&nbsp;	public void run() throws IOException, IrcException {
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;		bot.startBot ();</b>
+<b class="fc"><i>29</i>&nbsp;	}</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;	public void die(String sender) {
+<b class="nc"><i>32</i>&nbsp;		bot.sendIRC ().message ( sender, &quot;Okay, I&#39;ll Go Away Now!&quot; );</b>
+<b class="nc"><i>33</i>&nbsp;		bot.sendIRC ().quitServer ( &quot;Was Told To Go Away By&quot; + sender );</b>
+<b class="nc"><i>34</i>&nbsp;		bot.stopBotReconnect ();</b>
+<b class="nc"><i>35</i>&nbsp;	}</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;}
 <i>39</i>&nbsp;
-<i>40</i>&nbsp;	public void run() throws IOException, IrcException {
-<b class="nc"><i>41</i>&nbsp;		bot.startBot ();</b>
-<b class="nc"><i>42</i>&nbsp;	}</b>
-<i>43</i>&nbsp;
-<i>44</i>&nbsp;	public void die(String sender) throws Throwable {
-<b class="nc"><i>45</i>&nbsp;		bot.sendIRC ().message ( sender, &quot;Okay, I&#39;ll Go Away Now!&quot; );</b>
-<b class="nc"><i>46</i>&nbsp;		bot.sendIRC ().quitServer ( &quot;Was Told To Go Away By&quot; + sender );</b>
-<b class="nc"><i>47</i>&nbsp;		bot.stopBotReconnect ();</b>
-<b class="nc"><i>48</i>&nbsp;	}</b>
-<i>49</i>&nbsp;
-<i>50</i>&nbsp;	public UUID getID(){
-<b class="nc"><i>51</i>&nbsp;		return id;</b>
-<i>52</i>&nbsp;	}
-<i>53</i>&nbsp;}
-<i>54</i>&nbsp;
-<i>55</i>&nbsp;
+<i>40</i>&nbsp;
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2014-08-03 02:30</div>
+    <div style="float:right;">generated on 2014-08-04 03:29</div>
 </div>
 </body>
 </html>
