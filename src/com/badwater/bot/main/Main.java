@@ -1,24 +1,29 @@
 package com.badwater.bot.main;
 
-import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.core.BadwaterBotManager;
-import com.badwater.bot.core.Listener;
-import org.pircbotx.exception.IrcException;
-
-import java.io.IOException;
+import com.badwater.bot.games.TicTacToe.TicTacToeBoard;
 
 /**
  * Created by irinix on 8/3/14.
  */
 public class Main {
-	public static void main(String[] args) throws IOException, IrcException {
-		BadwaterBotManager manager =
-			   new BadwaterBotManager ( "Botman", "BwBotMan", "#irc.freenode.net", "#badwater", new Listener (),
-			                            false, false );
-		BadwaterBot BadWaterBill =
-			   new BadwaterBot ( "Badwater_Bill", "bwBill", "givem3thecookie", "barjavel.freenode.net", "#badwater",
-			                     new Listener (), false, false );
-		manager.addManagedBot ( BadWaterBill );
+
+	public static void main(String args[]) {
+
+		TicTacToeBoard b = new TicTacToeBoard ( 5, 5 );
+		char[][] arr = b.getBoard ();
+		int XX = arr.length;
+		int YY = 0;
+		for ( int y = 0; y < arr.length; y++ ) {
+			String bLine = "";
+			for ( int x = 0; x < arr[y].length; x++ ) {
+
+				bLine += String.valueOf ( arr[y][x] );
+
+			}
+
+			System.out.println ( bLine + "::" + YY );
+		}
 
 	}
 }
+

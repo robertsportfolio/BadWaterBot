@@ -16,9 +16,13 @@ public abstract class BadwaterBotCore {
 	protected Configuration config;
 
 
-	public void getName() {
+	public String getName() {
+		return bot.getNick ();
 
+	}
 
+	public int getId() {
+		return bot.getBotId ();
 	}
 
 	public void run() throws IOException, IrcException {

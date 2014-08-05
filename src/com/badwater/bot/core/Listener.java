@@ -14,7 +14,8 @@ import java.util.Date;
  * Created by irinix on 8/3/14.
  */
 public class Listener extends ListenerAdapter {
-	private ArrayList<Command> commands = new ArrayList<> ();
+	protected ArrayList<Command> commands = new ArrayList<> ();
+	protected String prefix;
 
 
 	public Listener() {
@@ -28,7 +29,7 @@ public class Listener extends ListenerAdapter {
 		String msg = dateTime + " ::: " + e.getChannel ().getName () + " :: " + e.getUser ().getNick () + " : "
 		             + e.getMessage ();
 		boolean understood = false;
-		String prefix = "?";
+		prefix = "?";
 		if ( !parseMsg[0].startsWith ( prefix ) ) {
 			System.out.println ( msg );
 			understood = true;

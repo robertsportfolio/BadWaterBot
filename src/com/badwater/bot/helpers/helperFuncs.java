@@ -22,6 +22,16 @@ public class helperFuncs {
 		return isTni;
 	}
 
+	public static boolean boundsCheck(char[][] arr, int y, int x) {
+		if ( x == 0 || y == 0 || x + 1 >= arr[y].length || y + 1 >= arr.length ) {
+			return true;
+
+		}
+		else {
+			return false;
+		}
+	}
+
 	public static int convertToInt(String s) {
 		int retVal = -1;
 		if ( s.matches ( "^10 | [0-9]$" ) ) {
