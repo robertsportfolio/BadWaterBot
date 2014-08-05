@@ -21,8 +21,9 @@ public class Main {
 
 			}
 
-			System.out.println ( bLine + "::" + YY );
+			System.out.println ( bLine );
 		}
+
 
 	}
 }
