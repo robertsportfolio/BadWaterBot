@@ -1,9 +1,18 @@
 package com.badwater.bot.helpers;
 
+import java.util.Random;
+
 /**
  * Created by irinix on 8/3/14.
  */
 public class helperFuncs {
+	private static Random random = new Random ();
+
+	public static int nextIntInRange(int max, int min) {
+		int retVal = random.nextInt ( ( max - min ) + 1 ) - min;
+		return retVal;
+	}
+
 	public static String[] toArgs(String msg) {
 
 		for ( String s : msg.split ( " " ) ) {

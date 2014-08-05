@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String args[]) {
 
-		TicTacToeBoard b = new TicTacToeBoard ( 5, 5 );
+		TicTacToeBoard b = new TicTacToeBoard ();
 		char[][] arr = b.getBoard ();
 		int XX = arr.length;
 		int YY = 0;

@@ -1,5 +1,7 @@
 package com.badwater.bot.games.core;
 
+import com.badwater.bot.helpers.Tuple;
+
 /**
  * Created by irinix on 8/4/14.
  */
@@ -65,6 +67,11 @@ public abstract class GameBoard {
 
 
 		}
+	}
+
+	public void updateBoard(char piece, Tuple<Integer, Integer> position) {
+		board[position.getSecond ()][position.getFirst ()] = piece;
+
 	}
 
 
