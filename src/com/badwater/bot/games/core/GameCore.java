@@ -1,6 +1,7 @@
 package com.badwater.bot.games.core;
 
 import com.badwater.bot.helpers.Tuple;
+import com.badwater.bot.helpers.helperFuncs;
 
 
 /**
@@ -11,6 +12,7 @@ public abstract class GameCore {
 	protected int boardSizeW;
 	protected GameBoard board;
 	protected boolean isRunning;
+	protected Player currentPlayer;
 
 
 	protected void run(Tuple players) {
@@ -33,7 +35,7 @@ public abstract class GameCore {
 		boolean valid = verifyMove ( translateMove ( newPosition ) );
 		if ( valid ) {
 			//put player's piece at location
-
+			Tuple position = translateMove ( newPosition );
 			return true;
 		}
 		else {
@@ -44,7 +46,9 @@ public abstract class GameCore {
 	}
 
 	protected boolean verifyMove(Tuple<Integer, Integer> move) {
-		if ( move.getFirst () % 2 != 1 || move.getSecond () % 2 != 1 ) {
+		if ( ( move.getFirst () % 2 != 1 || move.getSecond () % 2 != 1 ) || ( !helperFuncs.boundsCheck (
+			   board.getBoard (), move.getSecond (), move.getFirst () ) ) ) {
+
 			return false;
 		}
 		else {

@@ -1,6 +1,5 @@
 package com.badwater.bot.games.TicTacToe;
 
-import com.badwater.bot.core.BadwaterBotCore;
 import com.badwater.bot.core.GameManagerListener;
 import com.badwater.bot.core.Listener;
 import com.badwater.bot.games.core.Player;
@@ -10,7 +9,7 @@ import com.badwater.bot.helpers.helperFuncs;
 /**
  * Created by irinix on 8/5/14.
  */
-public class TicTacToeManager extends BadwaterBotCore {
+public class TicTacToeManager extends TicTacToePlayer {
 	private Tuple<Player, Player> players;
 	private Player player1;
 	private Player player2;

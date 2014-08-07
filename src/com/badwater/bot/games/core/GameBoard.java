@@ -109,7 +109,6 @@ public abstract class GameBoard {
 
 	}
 
-
 	public char[][] getBoard() {
 		return board;
 	}

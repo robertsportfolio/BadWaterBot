@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public abstract class Player {
 	protected User user;
 	protected ArrayList pieces;
+	protected Piece currentPiece = new Piece ();
 
 	public Player() {
 

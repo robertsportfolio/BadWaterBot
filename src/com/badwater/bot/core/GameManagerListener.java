@@ -9,6 +9,8 @@ public class GameManagerListener extends Listener {
 
 
 	public GameManagerListener() {
+		prefix = "!dm";
+
 		commands.add ( new newGameCommand () );
 	}
 

@@ -25,7 +25,6 @@ public class BadwaterBot extends BadwaterBotCore {
 		                                          .buildConfiguration ();
 
 
-		this.bot = new PircBotX ( config );
 	}
 
 	public BadwaterBot(String name,
@@ -45,9 +44,6 @@ public class BadwaterBot extends BadwaterBotCore {
 		                                          .addAutoJoinChannel ( channel )
 		                                          .addListener ( listener )
 		                                          .buildConfiguration ();
-
-
-		this.bot = new PircBotX ( config );
 	}
 
 	public BadwaterBot(String name,
@@ -71,8 +67,11 @@ public class BadwaterBot extends BadwaterBotCore {
 		                                          .addListener ( GMListener )
 		                                          .buildConfiguration ();
 
+	}
 
+	public void createAndRun() throws IOException, IrcException {
 		this.bot = new PircBotX ( config );
+		run ();
 	}
 }
 

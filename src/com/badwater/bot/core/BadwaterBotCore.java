@@ -15,7 +15,7 @@ public abstract class BadwaterBotCore {
 
 	protected Configuration config;
 
-	protected String loginInfo = getName () + "'s Password does Not equal NULL: Logging in";
+	//protected String loginInfo = getName () + "'s Password does Not equal NULL: Logging in";
 
 	public String getName() {
 		return bot.getNick ();
@@ -28,7 +28,7 @@ public abstract class BadwaterBotCore {
 
 	protected void run() throws IOException, IrcException {
 		if ( this.config.getNickservPassword () != null ) {
-			System.out.println ( loginInfo );
+			System.out.println ( "Password Does != Null, Logging in." );
 		}
 		bot.startBot ();
 	}
