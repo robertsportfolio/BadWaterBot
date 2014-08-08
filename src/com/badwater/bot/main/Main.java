@@ -2,36 +2,49 @@ package com.badwater.bot.main;
 
 import com.badwater.bot.core.BadwaterBot;
 import com.badwater.bot.core.Listener;
+import com.badwater.bot.helpers.ConfigManager;
 import org.apache.derby.jdbc.EmbeddedDriver;
+import org.pircbotx.Configuration;
 import org.pircbotx.exception.IrcException;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by irinix on 8/3/14.
  */
 public class Main {
+	//database shit.  Not quite in use yet.  But will be.
 	private static String dbURL = "jdbc:derby:./DB/BotDB;";
 	private static Connection conn = null;
 	private static Statement stmt = null;
 	private static Driver dbDriver;
 	private static DriverManager dMgr;
 
+
+	//bot shit. stuff will be added here.
 	private static BadwaterBot bot;
 
 	public static void main(String args[]) throws SQLException, IOException, IrcException {
-		createBot ();
+		ConfigManager cfgMgr = new ConfigManager ();
+		ArrayList<Listener> listeners = new ArrayList<Listener> ();
+		listeners.add ( new Listener () );
+		Configuration c =
+			   cfgMgr.createConfig ( "BadWater_Bill", "BwBill", "weber.freenode.net", "#badwater",
+			                         "givem3thecookie",
+			                         listeners, false, false, true );
+		cfgMgr.addConfig ( c );
+		c = cfgMgr.getConfig ( "BadWater_Bill" );
+		createBot ( c );
 
 
 	}
 
 
-	private static void createBot() throws IOException, IrcException {
-		bot = new BadwaterBot ( "Badwater_Bill", "BWBill", "givem3thecookie", "irc.freenode.net", "#badwater",
-		                        new Listener (), false, false );
-		bot.createAndRun ();
-
+	private static void createBot(Configuration c) throws IOException, IrcException {
+		bot = new BadwaterBot ( c );
+		bot.startBot ();
 	}
 
 	private static void createConnection() throws SQLException {
