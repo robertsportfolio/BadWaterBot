@@ -3,6 +3,10 @@ package com.badwater.bot.helpers;
 import com.badwater.bot.core.Listener;
 import org.pircbotx.Configuration;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +14,7 @@ import java.util.HashMap;
  * Created by irinix on 8/8/14.
  */
 public class ConfigManager {
-	private static final String PATH_TO_CONFIG = "./DB/Configs/SavedConfigs.conf";
+	private static final String PATH_TO_CONFIG = "./DB/Configs/";
 	private HashMap<String, Configuration> savedConfigs = new HashMap<String, Configuration> ();
 	private Configuration defaultConfig = new Configuration.Builder ().setName ( "badWater_Bot" )
 	                                                                  .setLogin ( "badWaterBot" )
@@ -45,11 +49,11 @@ public class ConfigManager {
 		}
 		Configuration config;
 		config = configBuilder.buildConfiguration ();
+
 		return config;
 	}
 
 	public Configuration getConfig(String name) {
-		Configuration tmpConfig;
 		if ( savedConfigs.containsKey ( name ) ) {
 			return savedConfigs.get ( name );
 		}
@@ -57,6 +61,58 @@ public class ConfigManager {
 			return defaultConfig;
 		}
 	}
+
+	public void saveConfigToFile(Configuration config) throws IOException {
+		File file = new File ( PATH_TO_CONFIG );
+
+		if ( !file.exists () ) {
+
+			file.mkdir ();
+		}
+
+		String line = "";
+		String tmp = "";
+		String out = "";
+		for ( String key : savedConfigs.keySet () ) {
+			System.out.println ( key );
+			file = new File ( PATH_TO_CONFIG + key + ".conf" );
+			if ( file.exists () ) {
+				file.delete ();
+			}
+			BufferedWriter fos = new BufferedWriter ( new FileWriter ( file ) );
+			fos.write ( "[" + key + "]\n" );
+			String name = "Name=" + savedConfigs.get ( key ).getName () + "\n";
+			String login = "Login=" + savedConfigs.get ( key ).getLogin () + "\n";
+			String server = "Server=" + savedConfigs.get ( key ).getServerHostname () + "\n";
+			String channel = savedConfigs.get ( key ).getAutoJoinChannels () + "\n";
+			channel = channel.replace ( "{", "" );
+			channel = channel.replace ( "}", "" );
+			channel = channel.replace ( "=", "" );
+			channel = "Channel=" + channel;
+			String password = "Password=" + savedConfigs.get ( key ).getNickservPassword () + "\n";
+			String capEnabled = "CapEnabled=" + savedConfigs.get ( key ).isCapEnabled () + "\n";
+			String autoNickChange = "IsAutoNickChange=" + savedConfigs.get ( key ).isAutoNickChange () + "\n";
+			String autoReconnect = "IsAutoReconnect=" + savedConfigs.get ( key ).isAutoReconnect () +
+			                       "\n";
+			String listeners = "{Listeners}\n";
+			for ( Object l : ( savedConfigs.get ( key ).getListenerManager ().getListeners () ) ) {
+				String listener = "";
+				if ( l.getClass ().toString ().contains ( "org.pircbotx.hooks.CoreHooks" ) ) {
+					//throw it away;
+				}
+				else {
+					listeners += listener;
+				}
+			}
+			out = name + login + server + channel + password + capEnabled + autoNickChange + autoReconnect
+			      + listeners;
+			fos.write ( out + "\n\n" );
+			fos.close ();
+		}
+
+
+	}
+
 
 	/*public void saveConfigToFile(Configuration config) throws IOException {
 		File file = new File(PATH_TO_CONFIG);
