@@ -32,10 +32,11 @@ public class Main {
 		listeners.add ( new Listener () );
 		Configuration c =
 			   cfgMgr.createConfig ( "BadWater_Bill", "BwBill", "weber.freenode.net", "#badwater",
-			                         "givem3thecookie",
-			                         listeners, false, false, true );
+			                         "givem3thecookie", listeners, false, false, false );
 		cfgMgr.addConfig ( c );
-		c = cfgMgr.getConfig ( "BadWater_Bill" );
+		c = cfgMgr.getConfig ( c.getName () );
+
+		cfgMgr.saveConfigToFile ( c );
 		createBot ( c );
 
 

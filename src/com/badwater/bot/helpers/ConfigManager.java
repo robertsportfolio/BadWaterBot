@@ -96,12 +96,12 @@ public class ConfigManager {
 			                       "\n";
 			String listeners = "{Listeners}\n";
 			for ( Object l : ( savedConfigs.get ( key ).getListenerManager ().getListeners () ) ) {
-				String listener = "";
-				if ( l.getClass ().toString ().contains ( "org.pircbotx.hooks.CoreHooks" ) ) {
-					//throw it away;
+				String listener = l.getClass ().toString ();
+				if ( listener.contains ( "org.pircbotx" ) ) {
+					listener = "";
 				}
 				else {
-					listeners += listener;
+					listeners += listener + "\n";
 				}
 			}
 			out = name + login + server + channel + password + capEnabled + autoNickChange + autoReconnect
