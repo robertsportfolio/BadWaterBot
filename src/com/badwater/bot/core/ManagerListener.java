@@ -1,35 +1,33 @@
 package com.badwater.bot.core;
 
-import com.badwater.bot.commands.Command;
-import com.badwater.bot.commands.DieCommand;
-import com.badwater.bot.commands.NewsCommand;
-import com.badwater.bot.commands.joinCommand;
+import com.badwater.bot.commands.managerCommands.MGRCommand;
+import com.badwater.bot.commands.managerCommands.MGRDieCommand;
+import com.badwater.bot.commands.managerCommands.newBotCommand;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.MessageEvent;
+import org.pircbotx.hooks.events.PrivateMessageEvent;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by irinix on 8/3/14.
+ * Created by irinix on 8/11/14.
  */
-public class Listener extends ListenerAdapter {
-	protected ArrayList<Command> commands = new ArrayList<> ();
-	protected String prefix = "?";
+public class ManagerListener extends ListenerAdapter {
+	private String prefix = "!";
 
+	private ArrayList<MGRCommand> commands = new ArrayList<MGRCommand> ();
 
-	public Listener() {
-		commands.add ( new DieCommand () );
-		commands.add ( new NewsCommand () );
-		commands.add ( new joinCommand () );
+	public ManagerListener() {
+		commands.add ( new MGRDieCommand () );
+		commands.add ( new newBotCommand () );
 	}
 
-	public void onMessage(MessageEvent e) throws Exception {
+
+	@Override public void onPrivateMessage(PrivateMessageEvent e) throws Exception {
 		String[] parseMsg = helperFuncs.toArgs ( e.getMessage () );
 		String dateTime = new Date ().toString ();
-		String msg = dateTime + " ::: " + e.getChannel ().getName () + " :: " + e.getUser ().getNick () + " : "
-		             + e.getMessage ();
+		String msg = dateTime + " ::: " + e.getUser ().getNick () + " : " + e.getMessage ();
 		boolean understood = false;
 		if ( !parseMsg[0].startsWith ( prefix ) ) {
 			System.out.println ( msg );
@@ -37,7 +35,7 @@ public class Listener extends ListenerAdapter {
 			return;
 		}
 		else if ( parseMsg[0].startsWith ( prefix ) ) {
-			for ( Command cmd : commands ) {
+			for ( MGRCommand cmd : commands ) {
 				if ( parseMsg[0].equalsIgnoreCase ( prefix + cmd.getAlias () ) ) {
 					String msg1 = dateTime + " ::: " + e.getUser ().getNick () + " issued the " + cmd.getAlias ()
 					              + " Command";
@@ -56,8 +54,9 @@ public class Listener extends ListenerAdapter {
 		if ( !understood ) {
 			String tmpMessage =
 				   "I'm Sorry " + e.getUser ().getNick () + " I don' understand \"" + e.getMessage () + "\"";
-			e.getChannel ().send ().message ( tmpMessage );
+			e.getUser ().send ().message ( tmpMessage );
 		}
 
 	}
 }
+

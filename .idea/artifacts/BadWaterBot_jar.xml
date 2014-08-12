@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BadWaterBot:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BadWaterBot_jar</output-path>
+    <root id="archive" name="BadWaterBot.jar">
+      <element id="module-output" name="BadWaterBot" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/pircbotx-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lombok-1.12.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsr305-2.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-lang3-3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/slf4j-api-1.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-codec-1.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/guava-15.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/lib/jvm/java-7-oracle/db/lib/derby.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -12,9 +12,6 @@ public class TicTacToeBoard extends GameBoard {
 
 	public TicTacToeBoard() {
 		super ( 3, 3 );
-		updateBoard ( 'X', new Tuple<Integer, Integer> ( 1, 1 ) );
-		updateBoard ( 'X', new Tuple<Integer, Integer> ( 3, 3 ) );
-		updateBoard ( 'X', new Tuple<Integer, Integer> ( 5, 5 ) );
 
 	}
 

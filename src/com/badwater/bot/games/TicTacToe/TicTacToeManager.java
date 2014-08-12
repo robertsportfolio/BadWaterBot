@@ -14,6 +14,7 @@ public class TicTacToeManager extends TicTacToePlayer {
 	private Player player1;
 	private Player player2;
 
+
 	public TicTacToeManager(String name,
 	                        String login,
 	                        String password,
