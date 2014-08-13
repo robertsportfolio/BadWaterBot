@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by irinix on 8/8/14.
  */
-public class BotManager extends BadwaterBot {
+public class BotManager extends BadwaterBotCore {
 	private ConfigManager cfm = new ConfigManager ();
 	private ArrayList<BadwaterBot> managedBots = new ArrayList<BadwaterBot> ();
 	private BadwaterBot bot;
@@ -50,6 +50,9 @@ public class BotManager extends BadwaterBot {
 
 	}
 
+	public ArrayList<BadwaterBot> getManagedBots() {
+		return managedBots;
+	}
 	public void startManagedBots() throws IOException, IrcException {
 		for ( BadwaterBot b : managedBots ) {
 			b.startBot ();

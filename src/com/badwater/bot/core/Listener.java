@@ -25,6 +25,15 @@ public class Listener extends ListenerAdapter {
 		commands.add ( new joinCommand () );
 	}
 
+	public boolean hasCommand(Command c) {
+		boolean retval = false;
+		if ( commands.contains ( c ) ) {
+			retval = true;
+		}
+		return retval;
+	}
+
+
 	public void onMessage(MessageEvent e) throws Exception {
 		String[] parseMsg = helperFuncs.toArgs ( e.getMessage () );
 		String dateTime = new Date ().toString ();

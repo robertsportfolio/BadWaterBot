@@ -2,9 +2,7 @@ package com.badwater.bot.helpers;
 
 import org.pircbotx.hooks.events.MessageEvent;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -15,53 +13,47 @@ public class RSSReader {
 	private HashMap<String, HashMap<String, String>> aggregatedNews = new HashMap<String, HashMap<String, String>> ();
 	private Tuple Retval;
 
-	public RSSReader() {
-		addSource ( null, "cnn", "http://rss.cnn.com/rss/edition.rss" );
-		addSource ( null, "techdirt", "http://feeds.feedburner.com/techdirt/feed" );
-		addSource ( null, "espn", "http://sports.espn.go.com/espn/rss/news?format=xml" );
-
+	public RSSReader() throws IOException {
+		initSourceConfig ();
 	}
 
-	public void addSource(MessageEvent e, String name, String url) {
-		try {
-			if ( e != null ) {
-				if ( !urlMap.containsKey ( name.toLowerCase () ) ) {
-
-					urlMap.put ( name, new URL ( url ) );
-					e.getChannel ()
-					 .send ()
-					 .message ( e.getUser ().getNick () + ": Your News Source: " + name
-					            + " Successfully Added With URL: " + url + " It will be updated once an hour" );
-					e.getChannel ().send ().message ( "SOURCES: " );
-					for ( String tmp1 : urlMap.keySet () ) {
-						e.getChannel ().send ().message ( tmp1 );
-					}
-				}
-				else {
-					e.getChannel ()
-					 .send ()
-					 .message ( "Sorry " + e.getUser ().getNick () + " That Source Already Exists" );
-				}
+	private void initSourceConfig() throws IOException {
+		File file = new File ( "./DB/Configs/NewsSources/" );
+		if ( !file.exists () ) {
+			file.mkdir ();
+		}
+		else {
+			file = new File ( "./DB/Configs/NewsSources/NewsSources.conf" );
+			if ( file.createNewFile () ) {
+				System.out.println ( "NewsSources.conf Created" );
 			}
 			else {
-				// just add the source
-				if ( !urlMap.containsKey ( name.toLowerCase () ) ) {
-
-					urlMap.put ( name, new URL ( url ) );
-
-				}
-			}
-
-		} catch (MalformedURLException mue) {
-			if ( e != null ) {
-				e.getChannel ().send ().message ( e.getUser ().getNick () + "Sorry, that is not a valid URL" );
-			}
-			else {
-				mue.printStackTrace ();
+				System.out.println ( "File Exists!" );
 			}
 		}
-		//news source aggregating.
-		aggregateSilently ();
+	}
+
+	public void loadSources() throws IOException {
+		File file = new File ( "./DB/Configs/NewsSources/NewsSources.conf" );
+		if ( !file.exists () ) {
+			System.out.println ( "Error!  No Such File!" + file.getPath () );
+		}
+		else {
+			BufferedReader in = new BufferedReader ( new FileReader ( file ) );
+			String lineIn = "";
+			String[] args = { "", "" };
+			while ( ( lineIn = in.readLine () ) != null ) {
+				if ( lineIn.contains ( "=" ) ) {
+					args = lineIn.split ( "=" );
+
+				}
+				if ( !urlMap.containsKey ( args[0] ) ) {
+					urlMap.put ( args[0], new URL ( args[1] ) );
+				}
+			}
+			in.close ();
+			aggregateSilently ();
+		}
 	}
 
 	public void aggregateSilently() {
@@ -100,17 +92,82 @@ public class RSSReader {
 					aggregatedNews.put ( source, temp );
 				}
 			} catch (IOException e1) {
-				
+
 				e1.printStackTrace ();
 			}
 
 		}
 	}
 
-	public void update(MessageEvent e) {
+	public void addSource(MessageEvent e, String name, String url) {
+		try {
+			if ( e != null ) {
+				if ( !urlMap.containsKey ( name.toLowerCase () ) ) {
+
+					urlMap.put ( name, new URL ( url ) );
+					e.getChannel ()
+					 .send ()
+					 .message ( e.getUser ().getNick () + ": Your News Source: " + name
+					            + " Successfully Added With URL: " + url + " It will be updated once an hour" );
+
+				}
+				else {
+					e.getChannel ()
+					 .send ()
+					 .message ( "Sorry " + e.getUser ().getNick () + " That Source Already Exists" );
+				}
+			}
+			else {
+				// just add the source
+				if ( !urlMap.containsKey ( name.toLowerCase () ) ) {
+
+					urlMap.put ( name, new URL ( url ) );
+
+				}
+			}
+
+		} catch (MalformedURLException mue) {
+			if ( e != null ) {
+				e.getChannel ().send ().message ( e.getUser ().getNick () + "Sorry, that is not a valid URL" );
+			}
+			else {
+				mue.printStackTrace ();
+			}
+		}
+		//news source aggregating.
+		aggregateSilently ();
+	}
+
+	public void showSources(MessageEvent e) {
+		e.getUser ().send ().notice ( "SOURCES: " );
+		for ( String tmp1 : urlMap.keySet () ) {
+			e.getUser ().send ().notice ( tmp1 );
+		}
+	}
+
+	public void update(MessageEvent e) throws IOException {
 		e.getChannel ().send ().message ( "Okay " + e.getUser ().getNick () + "I'm aggregating news now." );
+		saveSources ();
 		aggregate ( e );
 
+	}
+
+	public void saveSources() throws IOException {
+		File file = new File ( "./DB/Configs/NewsSources/" );
+		if ( !file.exists () ) {
+			file.mkdir ();
+		}
+		else {
+			file = new File ( "./DB/Configs/NewsSources/NewsSources.conf" );
+			if ( !file.createNewFile () ) {
+				BufferedWriter out = new BufferedWriter ( new FileWriter ( file ) );
+				for ( String key : urlMap.keySet () ) {
+					String lineOut = key + "=" + urlMap.get ( key ) + "\n";
+					out.write ( lineOut );
+				}
+				out.close ();
+			}
+		}
 	}
 
 	public void aggregate(MessageEvent e) {
@@ -130,8 +187,21 @@ public class RSSReader {
 				e.getUser ().send ().message ( "You can add it with ?news add <source> <sourceURL>" );
 			}
 			else {
-				e.getUser ().send ().message ( source );
-				e.getUser ().send ().message ( "========================" );
+				String srcString = source;
+				String divideMsg = "";
+				int lengthifier = srcString.length () * 3;
+				for ( int i = 0; i < lengthifier; i++ ) {
+					divideMsg += "=";
+					if ( i < ( lengthifier / 2 - srcString.length () / 2 ) ) {
+						srcString = " " + srcString;
+					}
+					else if ( i > ( lengthifier / 2 ) + ( srcString.length () / 2 ) ) {
+						srcString += " ";
+					}
+				}
+				e.getUser ().send ().message ( divideMsg );
+				e.getUser ().send ().message ( "||" + srcString + "||" );
+				e.getUser ().send ().message ( divideMsg );
 				String sendMessage = "";
 
 				for ( int i = 0; i < 5; i++ ) {

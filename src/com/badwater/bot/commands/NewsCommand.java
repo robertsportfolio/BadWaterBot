@@ -1,5 +1,6 @@
 package com.badwater.bot.commands;
 
+import com.badwater.bot.core.BadwaterBot;
 import com.badwater.bot.helpers.RSSReader;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -10,11 +11,14 @@ import java.util.ArrayList;
  * Created by irinix on 8/3/14.
  */
 @SuppressWarnings("DefaultFileTemplate") public class NewsCommand implements Command<MessageEvent> {
-	private final RSSReader reader = new RSSReader ();
+
 
 	@Override public void exec(MessageEvent e) throws Exception {
+		BadwaterBot b = (BadwaterBot) e.getBot ();
+		RSSReader reader = b.getReader ();
 		String user = e.getUser ().getNick ();
 		String[] args = helperFuncs.toArgs ( e.getMessage () );
+
 		if ( args[1].equalsIgnoreCase ( "add" ) ) {
 			String name = args[2];
 			String url = args[3];
@@ -35,6 +39,10 @@ import java.util.ArrayList;
 
 		else if ( args[1].equalsIgnoreCase ( "update" ) ) {
 			reader.update ( e );
+		}
+
+		else if ( args[1].equalsIgnoreCase ( "sources" ) ) {
+			reader.showSources ( e );
 		}
 
 
