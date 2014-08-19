@@ -1,8 +1,8 @@
 package com.badwater.bot.main;
 
 import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.core.BotManager;
-import com.badwater.bot.core.ManagerListener;
+import com.badwater.bot.core.Listener;
+import com.badwater.bot.helpers.ConfigManager;
 import org.apache.derby.jdbc.EmbeddedDriver;
 import org.pircbotx.Configuration;
 import org.pircbotx.exception.IrcException;
@@ -24,17 +24,20 @@ public class Main {
 
 	//bot shit. stuff will be added here.
 	private static BadwaterBot bot;
+	private static ConfigManager cfgmgr = new ConfigManager ();
 
-	public static void main(String args[]) throws SQLException, IOException, IrcException {
-		Configuration bmgr = new Configuration.Builder<> ().setName ( "BW_BOTMAN" )
-			   //.addAutoJoinChannel ( "#badwater" )
-			   .setServerHostname ( "weber.freenode.net" )
-			   .addListener ( new ManagerListener () )
-			   .buildConfiguration ();
-
-		BotManager botman = new BotManager ( bmgr );
-		botman.startBot ();
-
+	public static void main(String args[]) throws SQLException, IOException, IrcException, ClassNotFoundException {
+		Configuration c = new Configuration.Builder ().setName ( "BadWater_Bill" )
+		                                              .setServerHostname ( "weber.freenode.net" )
+		                                              .setNickservPassword ( "givem3thecookie" )
+		                                              .setCapEnabled ( false )
+		                                              .setLogin ( "BW_BILL" )
+		                                              .addListener ( new Listener () )
+		                                              .addAutoJoinChannel ( "#badwater" )
+		                                              .addAutoJoinChannel ( "#reddit-gamedev" )
+		                                              .buildConfiguration ();
+		bot = new BadwaterBot ( c );
+		bot.startBot ();
 	}
 
 

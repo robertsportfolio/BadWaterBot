@@ -1,6 +1,7 @@
 package com.badwater.bot.helpers;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * Created by irinix on 8/3/14.
@@ -41,12 +42,17 @@ public class helperFuncs {
 		}
 	}
 
+	public static String[] prepMsgForLearner(String msg) {
+		//Strip All punctuation from the string and convert it to an array, then return
+		String[] retVal = msg.replaceAll ( "^[a-zA-Z]", "" ).toLowerCase ().split ( "\\s+" );
+		return retVal;
+	}
+
 	public static int convertToInt(String s) {
 		int retVal = -1;
-		if ( s.matches ( "^10 | [0-9]$" ) ) {
-			System.out.println ( "In Convert to int" + s );
-			retVal = Integer.parseInt ( s );
-		}
+		Pattern p = Pattern.compile ( "\\d+" );
+
+
 		return retVal;
 	}
 

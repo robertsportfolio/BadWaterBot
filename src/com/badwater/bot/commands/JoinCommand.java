@@ -6,7 +6,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 /**
  * Created by irinix on 8/11/14.
  */
-public class joinCommand implements Command<MessageEvent> {
+public class JoinCommand implements Command<MessageEvent> {
 	@Override public void exec(MessageEvent e) throws Exception {
 		String[] parsedCmd = helperFuncs.toArgs ( e.getMessage () );
 

@@ -25,6 +25,10 @@ public class ConfigManager {
 	                                                                  .setAutoNickChange ( true )
 	                                                                  .buildConfiguration ();
 
+	public String[] getConfigNames() {
+		String[] retVal = savedConfigs.keySet ().toArray ( new String[savedConfigs.keySet ().size ()] );
+		return retVal;
+	}
 
 	public Configuration createConfig(String name,
 	                                  String login,

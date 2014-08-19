@@ -56,50 +56,47 @@ public class RSSReader {
 		}
 	}
 
-	public void aggregateSilently() {
+	public void aggregateSilently() throws IOException {
 		for ( String source : urlMap.keySet () ) {
 			String title = "";
 			String url = "";
-			try {
-				BufferedReader in =
-					   new BufferedReader ( new InputStreamReader ( urlMap.get ( source ).openStream () ) );
-				String line;
-				HashMap<String, String> temp = new HashMap<String, String> ();
-				while ( ( line = in.readLine () ) != null ) {
-					if ( ( line.contains ( "<title>" ) || ( line.contains ( "<link>" ) ) ) ) {
-						if ( line.contains ( "<title>" ) ) {
-							int firstTitlePos = line.indexOf ( "<title>" );
-							title = line.substring ( firstTitlePos );
-							title = title.replace ( "<title>", "" );
-							int lastTitlePos = title.indexOf ( "</title>" );
-							title = title.substring ( 0, lastTitlePos );
-						}
-						if ( line.contains ( "<link>" ) ) {
-							int firstLinkPos = line.indexOf ( "<link>" );
-							url = line.substring ( firstLinkPos );
-							url = url.replace ( "<link>", "" );
-							int lastLinkPos = url.indexOf ( "</link>" );
-							url = url.substring ( 0, lastLinkPos );
-						}
-						if ( !temp.containsKey ( title ) && title != null && url != null ) {
-							temp.put ( title, url );
-						}
 
+			BufferedReader in = new BufferedReader ( new InputStreamReader ( urlMap.get ( source ).openStream ()
+			) );
+			String line;
+			HashMap<String, String> temp = new HashMap<String, String> ();
+			while ( ( line = in.readLine () ) != null ) {
+				if ( ( line.contains ( "<title>" ) || ( line.contains ( "<link>" ) ) ) ) {
+					if ( line.contains ( "<title>" ) ) {
+						int firstTitlePos = line.indexOf ( "<title>" );
+						title = line.substring ( firstTitlePos );
+						title = title.replace ( "<title>", "" );
+						int lastTitlePos = title.indexOf ( "</title>" );
+						title = title.substring ( 0, lastTitlePos );
 					}
-				}
-				in.close ();
-				if ( !aggregatedNews.containsKey ( source ) ) {
-					aggregatedNews.put ( source, temp );
-				}
-			} catch (IOException e1) {
+					if ( line.contains ( "<link>" ) ) {
+						int firstLinkPos = line.indexOf ( "<link>" );
+						url = line.substring ( firstLinkPos );
+						url = url.replace ( "<link>", "" );
+						int lastLinkPos = url.indexOf ( "</link>" );
+						url = url.substring ( 0, lastLinkPos );
+					}
+					if ( !temp.containsKey ( title ) && title != null && url != null ) {
+						temp.put ( title, url );
+					}
 
-				e1.printStackTrace ();
+				}
 			}
+			in.close ();
+			if ( !aggregatedNews.containsKey ( source ) ) {
+				aggregatedNews.put ( source, temp );
+			}
+
 
 		}
 	}
 
-	public void addSource(MessageEvent e, String name, String url) {
+	public void addSource(MessageEvent e, String name, String url) throws IOException {
 		try {
 			if ( e != null ) {
 				if ( !urlMap.containsKey ( name.toLowerCase () ) ) {
@@ -170,10 +167,9 @@ public class RSSReader {
 		}
 	}
 
-	public void aggregate(MessageEvent e) {
+	public void aggregate(MessageEvent e) throws IOException {
 		e.getUser ().send ().notice ( "Aggregating" );
 		aggregateSilently ();
-
 		e.getUser ().send ().notice ( "AGGREGATION: COMPLETE!" );
 	}
 

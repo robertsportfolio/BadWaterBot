@@ -25,10 +25,12 @@ public abstract class BadwaterBotCore extends PircBotX {
 
 	//protected String loginInfo = getName () + "'s Password does Not equal NULL: Logging in";
 
+
 	public String getName() {
 		return this.getNick ();
 
 	}
+
 
 	public int getId() {
 		return this.getBotId ();
