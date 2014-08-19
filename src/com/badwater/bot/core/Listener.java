@@ -28,7 +28,10 @@ public class Listener extends ListenerAdapter {
 	}
 
 	public void onMessage(MessageEvent e) throws Exception {
-		if ( e.getMessage ().equalsIgnoreCase ( prefix + "learn on" ) ) {
+		if ( e.getMessage ().equalsIgnoreCase ( prefix + "learn on" ) && e.getUser ()
+		                                                                  .getNick ()
+		                                                                  .equalsIgnoreCase ( "irinix" )
+		     && e.getUser ().isVerified () ) {
 			respondState = false;
 		}
 		if ( respondState == true ) {
@@ -73,7 +76,10 @@ public class Listener extends ListenerAdapter {
 			b.getLearner ().learn ( e.getMessage () );
 			System.out.println ( msg1 );
 		}
-		else if ( !respondState && e.getMessage ().equalsIgnoreCase ( "?learn off" ) ) {
+		else if ( !respondState && e.getMessage ().equalsIgnoreCase ( "?learn off" ) && e.getUser ()
+		                                                                                 .getNick ()
+		                                                                                 .equalsIgnoreCase (
+			                                                                                    "irinix" ) && e.getUser ().isVerified () ) {
 			respondState = true;
 		}
 	}
