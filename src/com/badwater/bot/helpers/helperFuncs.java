@@ -44,7 +44,7 @@ public class helperFuncs {
 
 	public static String[] prepMsgForLearner(String msg) {
 		//Strip All punctuation from the string and convert it to an array, then return
-		String[] retVal = msg.replaceAll ( "^[a-zA-Z]", "" ).toLowerCase ().split ( "\\s+" );
+		String[] retVal = msg.replaceAll ( "\\p{Punct}", "" ).toLowerCase ().split ( "\\s+" );
 		return retVal;
 	}
 

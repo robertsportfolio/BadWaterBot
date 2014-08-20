@@ -34,7 +34,6 @@ public class Main {
 		                                              .setLogin ( "BW_BILL" )
 		                                              .addListener ( new Listener () )
 		                                              .addAutoJoinChannel ( "#badwater" )
-		                                              .addAutoJoinChannel ( "#reddit-gamedev" )
 		                                              .buildConfiguration ();
 		bot = new BadwaterBot ( c );
 		bot.startBot ();

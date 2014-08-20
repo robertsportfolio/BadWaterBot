@@ -31,6 +31,15 @@ public class MarkovChain implements Serializable {
 		}
 	}
 
+	public void printChains() {
+		for ( String key : chains.keySet () ) {
+			System.out.println ( key );
+			for ( String key1 : chains.get ( key ).keySet () ) {
+				System.out.println ( "\t" + key1 );
+			}
+		}
+	}
+
 	public void generateNextLikelyWord(String word) {
 
 	}

@@ -32,6 +32,7 @@ public class Listener extends ListenerAdapter {
 		                                                                  .getNick ()
 		                                                                  .equalsIgnoreCase ( "irinix" )
 		     && e.getUser ().isVerified () ) {
+			e.respond ( "Okay, I'm going into Learn Mode Now.  " );
 			respondState = false;
 		}
 		if ( respondState == true ) {
