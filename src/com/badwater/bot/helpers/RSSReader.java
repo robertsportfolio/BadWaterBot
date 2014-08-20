@@ -11,7 +11,7 @@ import java.util.Random;
 public class RSSReader {
 	private HashMap<String, URL> urlMap = new HashMap<String, URL> ();
 	private HashMap<String, HashMap<String, String>> aggregatedNews = new HashMap<String, HashMap<String, String>> ();
-	private Tuple Retval;
+
 
 	public RSSReader() throws IOException {
 		initSourceConfig ();
@@ -20,16 +20,7 @@ public class RSSReader {
 	private void initSourceConfig() throws IOException {
 		File file = new File ( "./DB/Configs/NewsSources/" );
 		if ( !file.exists () ) {
-			file.mkdir ();
-		}
-		else {
-			file = new File ( "./DB/Configs/NewsSources/NewsSources.conf" );
-			if ( file.createNewFile () ) {
-				System.out.println ( "NewsSources.conf Created" );
-			}
-			else {
-				System.out.println ( "File Exists!" );
-			}
+			file.mkdirs ();
 		}
 	}
 
@@ -39,19 +30,19 @@ public class RSSReader {
 			System.out.println ( "Error!  No Such File!" + file.getPath () );
 		}
 		else {
-			BufferedReader in = new BufferedReader ( new FileReader ( file ) );
-			String lineIn = "";
-			String[] args = { "", "" };
-			while ( ( lineIn = in.readLine () ) != null ) {
-				if ( lineIn.contains ( "=" ) ) {
-					args = lineIn.split ( "=" );
+			try (BufferedReader in = new BufferedReader ( new FileReader ( file ) )) {
+				String lineIn = "";
+				String[] args = { "", "" };
+				while ( ( lineIn = in.readLine () ) != null ) {
+					if ( lineIn.contains ( "=" ) ) {
+						args = lineIn.split ( "=" );
 
-				}
-				if ( !urlMap.containsKey ( args[0] ) ) {
-					urlMap.put ( args[0], new URL ( args[1] ) );
+					}
+					if ( !urlMap.containsKey ( args[0] ) ) {
+						urlMap.put ( args[0], new URL ( args[1] ) );
+					}
 				}
 			}
-			in.close ();
 			aggregateSilently ();
 		}
 	}
@@ -61,37 +52,36 @@ public class RSSReader {
 			String title = "";
 			String url = "";
 
-			BufferedReader in = new BufferedReader ( new InputStreamReader ( urlMap.get ( source ).openStream ()
-			) );
-			String line;
-			HashMap<String, String> temp = new HashMap<String, String> ();
-			while ( ( line = in.readLine () ) != null ) {
-				if ( ( line.contains ( "<title>" ) || ( line.contains ( "<link>" ) ) ) ) {
-					if ( line.contains ( "<title>" ) ) {
-						int firstTitlePos = line.indexOf ( "<title>" );
-						title = line.substring ( firstTitlePos );
-						title = title.replace ( "<title>", "" );
-						int lastTitlePos = title.indexOf ( "</title>" );
-						title = title.substring ( 0, lastTitlePos );
-					}
-					if ( line.contains ( "<link>" ) ) {
-						int firstLinkPos = line.indexOf ( "<link>" );
-						url = line.substring ( firstLinkPos );
-						url = url.replace ( "<link>", "" );
-						int lastLinkPos = url.indexOf ( "</link>" );
-						url = url.substring ( 0, lastLinkPos );
-					}
-					if ( !temp.containsKey ( title ) && title != null && url != null ) {
-						temp.put ( title, url );
-					}
+			try (BufferedReader in = new BufferedReader (
+				   new InputStreamReader ( urlMap.get ( source ).openStream () ) )) {
+				String line;
+				HashMap<String, String> temp = new HashMap<String, String> ();
+				while ( ( line = in.readLine () ) != null ) {
+					if ( ( line.contains ( "<title>" ) || ( line.contains ( "<link>" ) ) ) ) {
+						if ( line.contains ( "<title>" ) ) {
+							int firstTitlePos = line.indexOf ( "<title>" );
+							title = line.substring ( firstTitlePos );
+							title = title.replace ( "<title>", "" );
+							int lastTitlePos = title.indexOf ( "</title>" );
+							title = title.substring ( 0, lastTitlePos );
+						}
+						if ( line.contains ( "<link>" ) ) {
+							int firstLinkPos = line.indexOf ( "<link>" );
+							url = line.substring ( firstLinkPos );
+							url = url.replace ( "<link>", "" );
+							int lastLinkPos = url.indexOf ( "</link>" );
+							url = url.substring ( 0, lastLinkPos );
+						}
+						if ( !temp.containsKey ( title ) && title != null && url != null ) {
+							temp.put ( title, url );
+						}
 
+					}
+				}
+				if ( !aggregatedNews.containsKey ( source ) ) {
+					aggregatedNews.put ( source, temp );
 				}
 			}
-			in.close ();
-			if ( !aggregatedNews.containsKey ( source ) ) {
-				aggregatedNews.put ( source, temp );
-			}
-
 
 		}
 	}
@@ -156,13 +146,11 @@ public class RSSReader {
 		}
 		else {
 			file = new File ( "./DB/Configs/NewsSources/NewsSources.conf" );
-			if ( !file.createNewFile () ) {
-				BufferedWriter out = new BufferedWriter ( new FileWriter ( file ) );
+			try (BufferedWriter out = new BufferedWriter ( new FileWriter ( file ) )) {
 				for ( String key : urlMap.keySet () ) {
 					String lineOut = key + "=" + urlMap.get ( key ) + "\n";
 					out.write ( lineOut );
 				}
-				out.close ();
 			}
 		}
 	}

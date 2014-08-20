@@ -1,6 +1,7 @@
 package com.badwater.bot.main;
 
 import com.badwater.bot.core.BadwaterBot;
+import com.badwater.bot.core.LearnerListener;
 import com.badwater.bot.core.Listener;
 import com.badwater.bot.helpers.ConfigManager;
 import org.apache.derby.jdbc.EmbeddedDriver;
@@ -33,6 +34,7 @@ public class Main {
 		                                              .setCapEnabled ( false )
 		                                              .setLogin ( "BW_BILL" )
 		                                              .addListener ( new Listener () )
+		                                              .addListener ( new LearnerListener () )
 		                                              .addAutoJoinChannel ( "#badwater" )
 		                                              .buildConfiguration ();
 		bot = new BadwaterBot ( c );

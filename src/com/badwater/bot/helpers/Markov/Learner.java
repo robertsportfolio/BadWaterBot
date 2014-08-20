@@ -3,77 +3,74 @@ package com.badwater.bot.helpers.Markov;
 import com.badwater.bot.helpers.helperFuncs;
 
 import java.io.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by irinix on 8/19/14.
  */
 public class Learner {
-	private static final String PATH_TO_FILE = "./DB/learner/learnedChains.chains";
-	MarkovChain mC = new MarkovChain ();
+	private static final String PATH_TO_FILE = "./DB/learner/Markov.chains";
+	private GutenbergLearner gbl;
+	private MarkovChain mC = new MarkovChain ();
+	private ArrayBlockingQueue<String> blQueue = new ArrayBlockingQueue<String> ( 25 );
 
 	public Learner() throws IOException, ClassNotFoundException {
-		if ( initLearnerFiles () ) {
-			System.out.println ( "Files Loaded Successfully" );
-			return;
-		}
-		System.out.println ( "Error Loading Learner Files!" );
+		initLearnerFiles ();
+		mC.printChains ();
+		gbl = new GutenbergLearner ( this );
+		( new Thread ( gbl ) ).start ();
 
 	}
 
-	private boolean initLearnerFiles() throws IOException, ClassNotFoundException {
-		boolean success = false;
+	private void initLearnerFiles() throws IOException, ClassNotFoundException {
+		//check to make sure the file directory exists.  If not, create it.
 		File file = new File ( "./DB/learner/" );
 		if ( !file.exists () ) {
-			file.mkdir ();
+			file.mkdirs ();
 		}
+		//if the directory DOES exist, check to see if the Markov.Chains File exists.
 		else {
 			file = new File ( PATH_TO_FILE );
-			if ( file.createNewFile () ) {
-				System.out.println ( "Created File: " + file.getCanonicalPath () );
-				success = true;
-			}
-			else {
+			if ( file.exists () ) {
 				System.out.println ( "File: " + file.getCanonicalPath () + " Already Exists, Loading!" );
 				loadChains ();
-				//delete the file to simplify my life.  Since only one object is being written,
-				// I don't need to loop
-				//over things.
-				file.delete ();
-				success = true;
+			}
+			else {
+				System.out.println (
+					   "File: " + PATH_TO_FILE + " Does Not Exist.  It Will Be Automagicaly Created" );
 			}
 		}
-		return success;
 	}
+
 
 	private void loadChains() throws IOException, ClassNotFoundException {
 
 		//Init an ObjectInputStream to load mC from file.
-		FileInputStream fis = new FileInputStream ( PATH_TO_FILE );
-		ObjectInputStream ois = new ObjectInputStream ( new BufferedInputStream ( fis ) );
-		this.mC = (MarkovChain) ois.readObject ();
-		//this is just here to debug whether it's loading or not.
-		this.mC.printChains ();
-		ois.close ();
+		try (FileInputStream fis = new FileInputStream ( PATH_TO_FILE );
+		     ObjectInputStream ois = new ObjectInputStream ( new BufferedInputStream ( fis ) )) {
+			mC = (MarkovChain) ois.readObject ();
+		}
 	}
 
 
-	public void learn(String msg) throws IOException, ClassNotFoundException {
+	public void learn(String msg) throws IOException, ClassNotFoundException, ClassCastException {
 		//send message to mC for chain generation.
-		String[] msgArr = helperFuncs.prepMsgForLearner ( msg );
-		mC.genChain ( msgArr );
-		saveChains ( mC );
+		blQueue.offer ( msg );
+		while ( !blQueue.isEmpty () ) {
+			System.out.println ( "=====\nSending Line: " + blQueue.peek () + " to mC.genChain()\n=====" );
+			mC.genChain ( helperFuncs.prepMsgForLearner ( blQueue.poll () ) );
+		}
+		saveChains ();
 	}
 
-	private void saveChains(MarkovChain mC) throws IOException, ClassNotFoundException {
 
-		//Just make sure the file is empty, before we start.
-		FileOutputStream clrFile = new FileOutputStream ( PATH_TO_FILE );
-		clrFile.close ();
+	private void saveChains() throws IOException, ClassNotFoundException {
+
+
 		//okay, file's been emptied.  Save our chains to file.
-		FileOutputStream fos = new FileOutputStream ( PATH_TO_FILE );
-		ObjectOutputStream oos = new ObjectOutputStream ( fos );
-		oos.writeObject ( mC );
-		//close that shit down.
-		oos.close ();
+		try (FileOutputStream fos = new FileOutputStream ( PATH_TO_FILE );
+		     ObjectOutputStream oos = new ObjectOutputStream ( fos )) {
+			oos.writeObject ( mC );
+		}
 	}
 }

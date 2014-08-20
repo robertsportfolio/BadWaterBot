@@ -25,6 +25,7 @@ public class BadwaterBot extends BadwaterBotCore {
 	public BadwaterBot(Configuration config) throws IOException, ClassNotFoundException {
 		super ( config );
 		learner = new Learner ();
+
 		reader.loadSources ();
 
 	}
