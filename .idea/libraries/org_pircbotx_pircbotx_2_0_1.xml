@@ -10,11 +10,7 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.8.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/guava-15.0.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/lib/pircbotx-2.0.1-javadoc.jar!/" />
-    </JAVADOC>
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/pircbotx-2.0.1-sources.jar!/" />
-    </SOURCES>
+    <JAVADOC />
+    <SOURCES />
   </library>
 </component>

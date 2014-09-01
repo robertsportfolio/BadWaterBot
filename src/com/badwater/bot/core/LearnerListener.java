@@ -17,10 +17,10 @@ public class LearnerListener extends ListenerAdapter {
 	}
 
 	public void onMessage(MessageEvent e) throws IOException, ClassNotFoundException {
-		if ( !e.getMessage ().startsWith ( "?" ) ) {
+		if ( !e.getMessage ().startsWith ( "?" ) || !e.getMessage().startsWith("!") ) {
 			b = (BadwaterBot) e.getBot ();
 			String msg1 = "New Markov Chain Acquired From String \"" + e.getMessage () + "\"";
-			b.getLearner ().learn ( ( e.getMessage () ) );
+			//b.getLearner ().learn ( ( e.getMessage () ) );
 			System.out.println ( msg1 );
 		}
 	}
@@ -29,7 +29,7 @@ public class LearnerListener extends ListenerAdapter {
 		if ( !e.getMessage ().startsWith ( "?" ) ) {
 			b = (BadwaterBot) e.getBot ();
 			String msg1 = "New Markov Chain Acquired From String \"" + e.getMessage () + "\"";
-			b.getLearner ().learn ( ( e.getMessage () ) );
+			//b.getLearner ().learn ( ( e.getMessage () ) );
 			System.out.println ( msg1 );
 		}
 	}

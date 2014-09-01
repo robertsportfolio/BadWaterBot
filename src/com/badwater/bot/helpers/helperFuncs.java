@@ -1,6 +1,7 @@
 package com.badwater.bot.helpers;
 
 import java.util.Random;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -9,8 +10,12 @@ import java.util.regex.Pattern;
 public class helperFuncs {
 	private static Random random = new Random ();
 
+	public static void debugGotHere(String s){
+		System.out.println("Got Here\t====\t" + s);
+	}
+
 	public static int nextIntInRange(int max, int min) {
-		int retVal = random.nextInt ( ( max - min ) + 1 ) - min;
+		int retVal = random.nextInt ( ( max - min ) + 1 ) + min;
 		return retVal;
 	}
 
@@ -51,6 +56,11 @@ public class helperFuncs {
 	public static int convertToInt(String s) {
 		int retVal = -1;
 		Pattern p = Pattern.compile ( "\\d+" );
+		Matcher m = p.matcher(s);
+		if (m.find()){
+			debugGotHere(s);
+			retVal = Integer.parseInt(s);
+		}
 
 
 		return retVal;

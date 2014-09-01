@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="JavaLibs">
-    <CLASSES>
-      <root url="jar:///usr/lib/jvm/java-7-oracle/db/lib/derby.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

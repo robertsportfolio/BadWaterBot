@@ -1,12 +1,8 @@
 package com.badwater.bot.core;
 
 import com.badwater.bot.commands.Command;
-import com.badwater.bot.commands.gamecommands.GameCommand;
+import com.badwater.bot.commands.gamecommands.AttackCommand;
 import com.badwater.bot.commands.gamecommands.PrintGameInfoCommand;
-import com.badwater.bot.commands.generalcommands.DieCommand;
-import com.badwater.bot.commands.generalcommands.HelpCommand;
-import com.badwater.bot.commands.generalcommands.JoinCommand;
-import com.badwater.bot.commands.generalcommands.NewsCommand;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -17,41 +13,34 @@ import java.util.Date;
 /**
  * Created by irinix on 8/3/14.
  */
-public class Listener extends ListenerAdapter {
+public class GameListener extends ListenerAdapter {
 	protected ArrayList<Command> commands     = new ArrayList<>();
-	protected String             prefix       = "?";
+	protected String             prefix       = "!";
+	private String gameChannel;
 	protected boolean            respondState = true;
 
-	public Listener() {
-		commands.add(new DieCommand());
-		commands.add(new NewsCommand());
-		commands.add(new JoinCommand());
-		commands.add(new HelpCommand());
-		commands.add(new GameCommand());
+	public GameListener(String gameChannel) {
+		this.gameChannel = gameChannel;
+		commands.add(new AttackCommand());
 		commands.add(new PrintGameInfoCommand());
 	}
 
 	public void onMessage(MessageEvent e) throws Exception {
-		if (e.getChannel().getName().contains("BWGame")) {
-			//just ignore the message if it's in a game channel.
-		}
-		else {
+			if(!e.getChannel().getName().contains("BWGame_")){
+				//skip the message
+			}
 			String[] parseMsg = helperFuncs.toArgs(e.getMessage());
 			String dateTime = new Date().toString();
-			String msg = dateTime + " ::: " + e.getChannel().getName() + " :: " + e.getUser().getNick() + " : " + e
-				  .getMessage();
 			boolean understood = false;
 			if (!parseMsg[0].startsWith(prefix)) {
-				System.out.println(msg);
 				understood = true;
-				return;
 			}
 			else if (parseMsg[0].startsWith(prefix)) {
 				for (Command cmd : commands) {
 					if (parseMsg[0].equalsIgnoreCase(prefix + cmd.getAlias())) {
-						String msg1 = dateTime + " ::: " + e.getUser().getNick() + " issued the " + cmd
-							  .getAlias() + " Command";
-						System.out.println(msg);
+						String msg1 = dateTime + " ::: " + e.getUser().getNick() + " issued the " + cmd.getAlias()
+
+						              + " Command";
 						System.out.println(msg1);
 						understood = true;
 						cmd.exec(e);
@@ -72,6 +61,6 @@ public class Listener extends ListenerAdapter {
 		}
 	}
 
-}
+
 
 

@@ -23,6 +23,7 @@ public abstract class BadwaterBotCore extends PircBotX {
 		super ( configuration );
 	}
 
+
 	//protected String loginInfo = getName () + "'s Password does Not equal NULL: Logging in";
 
 

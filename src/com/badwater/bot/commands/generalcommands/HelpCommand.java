@@ -1,5 +1,6 @@
-package com.badwater.bot.commands;
+package com.badwater.bot.commands.generalcommands;
 
+import com.badwater.bot.commands.Command;
 import org.pircbotx.hooks.Event;
 
 /**
