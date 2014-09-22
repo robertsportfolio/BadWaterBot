@@ -9,15 +9,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class RSSReader {
-	private HashMap<String, URL> urlMap = new HashMap<String, URL> ();
-	private HashMap<String, HashMap<String, String>> aggregatedNews = new HashMap<String, HashMap<String, String>> ();
+	private final HashMap<String, URL>                     urlMap         = new HashMap<String, URL>();
+	private final HashMap<String, HashMap<String, String>> aggregatedNews = new HashMap<String, HashMap<String, String>>();
 
 
 	public RSSReader() throws IOException {
 		initSourceConfig ();
 	}
 
-	private void initSourceConfig() throws IOException {
+	private void initSourceConfig() {
 		File file = new File ( "./DB/Configs/NewsSources/" );
 		if ( !file.exists () ) {
 			file.mkdirs ();

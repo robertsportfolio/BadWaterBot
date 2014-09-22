@@ -11,45 +11,60 @@ import java.util.ArrayList;
 /**
  * Created by irinix on 8/3/14.
  */
-@SuppressWarnings("DefaultFileTemplate") public class NewsCommand implements Command<MessageEvent> {
+@SuppressWarnings("DefaultFileTemplate")
+public class NewsCommand implements Command<MessageEvent> {
+	ArrayList<String> helpStrings = new ArrayList<String>();
 
+	public NewsCommand() {
+		helpStrings.add("add: add <source name> <source url>");
+		helpStrings.add("get: get <source name 1> <source name 2> ....<source name N>");
+		helpStrings.add("sources: prints a list of sources");
+		helpStrings.add("Update: Updates all news sources");
+	}
 
-	@Override public void exec(MessageEvent e) throws Exception {
-		BadwaterBot b = (BadwaterBot) e.getBot ();
-		RSSReader reader = b.getReader ();
-		String user = e.getUser ().getNick ();
-		String[] args = helperFuncs.toArgs ( e.getMessage () );
+	@Override
+	public void exec(MessageEvent event) throws Exception {
+		BadwaterBot b = (BadwaterBot) event.getBot();
+		RSSReader reader = b.getReader();
+		String user = event.getUser().getNick();
+		String[] args = helperFuncs.toArgs(event.getMessage());
 
-		if ( args[1].equalsIgnoreCase ( "add" ) ) {
+		if (args[1].equalsIgnoreCase("add")) {
 			String name = args[2];
 			String url = args[3];
-			reader.addSource ( e, name, url );
+			reader.addSource(event, name, url);
 		}
 
-		else if ( args[1].equalsIgnoreCase ( "get" ) ) {
+		else if (args[1].equalsIgnoreCase("get")) {
 			//noinspection unchecked
-			ArrayList<String> argList = new ArrayList ();
-			for ( int argNum = 2; argNum < args.length; argNum++ ) {
-				argList.add ( args[argNum] );
+			ArrayList<String> argList = new ArrayList();
+			for (int argNum = 2; argNum < args.length; argNum++) {
+				argList.add(args[argNum]);
 			}
 
-			reader.showNews ( e, argList.toArray ( new String[argList.size ()] ) );
+			reader.showNews(event, argList.toArray(new String[argList.size()]));
 
 
 		}
 
-		else if ( args[1].equalsIgnoreCase ( "update" ) ) {
-			reader.update ( e );
+		else if (args[1].equalsIgnoreCase("update")) {
+			reader.update(event);
 		}
 
-		else if ( args[1].equalsIgnoreCase ( "sources" ) ) {
-			reader.showSources ( e );
+		else if (args[1].equalsIgnoreCase("sources")) {
+			reader.showSources(event);
 		}
 
 
 	}
 
-	@Override public String getAlias() {
+	@Override
+	public String getAlias() {
 		return "news";
+	}
+
+	@Override
+	public ArrayList<String> getHelpString() {
+		return helpStrings;
 	}
 }

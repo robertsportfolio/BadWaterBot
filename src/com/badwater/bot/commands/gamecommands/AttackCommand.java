@@ -1,9 +1,9 @@
 package com.badwater.bot.commands.gamecommands;
 
 import com.badwater.bot.Game.GameHandler;
+import com.badwater.bot.Game.gamecore.actors.AbstractActor;
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.core.gamecore.actors.AbstractActor;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -49,5 +49,10 @@ public class AttackCommand implements Command<MessageEvent> {
 	@Override
 	public String getAlias() {
 		return "Attack";
+	}
+
+	@Override
+	public ArrayList<String> getHelpString() {
+		return null;
 	}
 }

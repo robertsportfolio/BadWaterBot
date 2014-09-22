@@ -3,10 +3,7 @@ package com.badwater.bot.core;
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.commands.gamecommands.GameCommand;
 import com.badwater.bot.commands.gamecommands.PrintGameInfoCommand;
-import com.badwater.bot.commands.generalcommands.DieCommand;
-import com.badwater.bot.commands.generalcommands.HelpCommand;
-import com.badwater.bot.commands.generalcommands.JoinCommand;
-import com.badwater.bot.commands.generalcommands.NewsCommand;
+import com.badwater.bot.commands.generalcommands.*;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -26,8 +23,9 @@ public class Listener extends ListenerAdapter {
 		commands.add(new DieCommand());
 		commands.add(new NewsCommand());
 		commands.add(new JoinCommand());
-		commands.add(new HelpCommand());
+		commands.add(new HelpCommand(this));
 		commands.add(new GameCommand());
+		commands.add(new SayCommand());
 		commands.add(new PrintGameInfoCommand());
 	}
 
@@ -72,6 +70,13 @@ public class Listener extends ListenerAdapter {
 		}
 	}
 
+	public ArrayList<Command> getCommands() {
+		return commands;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
 }
 
 

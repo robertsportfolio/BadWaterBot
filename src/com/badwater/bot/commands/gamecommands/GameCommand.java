@@ -6,6 +6,8 @@ import com.badwater.bot.core.BadwaterBot;
 import com.badwater.bot.core.GameListener;
 import org.pircbotx.hooks.events.MessageEvent;
 
+import java.util.ArrayList;
+
 /**
  * Created by Robert on 8/31/2014.
  */
@@ -15,8 +17,8 @@ public class GameCommand implements Command<MessageEvent> {
 	public void exec(MessageEvent event) throws Exception {
 		BadwaterBot b = (BadwaterBot) event.getBot();
 		GameHandler gh = b.getGameHandler();
-		gh.createNewGame();
-		String gameChannel ="#" + gh.getGameName();
+		gh.createNewGame(event.getUser().getNick());
+		String gameChannel = "#" + gh.getGameName();
 		System.out.println("Joining: " + gameChannel);
 		b.getConfiguration().getListenerManager().addListener(new GameListener(gameChannel));
 		b.sendIRC().joinChannel(gameChannel);
@@ -28,5 +30,10 @@ public class GameCommand implements Command<MessageEvent> {
 	@Override
 	public String getAlias() {
 		return "newgame";
+	}
+
+	@Override
+	public ArrayList<String> getHelpString() {
+		return null;
 	}
 }

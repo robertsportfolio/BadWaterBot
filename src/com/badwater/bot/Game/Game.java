@@ -1,7 +1,7 @@
 package com.badwater.bot.Game;
 
-import com.badwater.bot.core.gamecore.GameCore;
-import com.badwater.bot.core.gamecore.builders.RoomBuilder;
+import com.badwater.bot.Game.gamecore.GameCore;
+import com.badwater.bot.Game.gamecore.builders.RoomBuilder;
 import com.badwater.bot.helpers.helperFuncs;
 
 /**
@@ -15,10 +15,10 @@ public class Game extends GameCore {
 		super(gameName);
 		helperFuncs.debugGotHere("GAME");
 		room = new RoomBuilder().build();
-		if(room.equals(null)){
+		if (room.equals(null)) {
 			helperFuncs.debugGotHere("Room = null error!");
 		}
-		else{
+		else {
 			helperFuncs.debugGotHere("Not An Error!");
 		}
 	}
