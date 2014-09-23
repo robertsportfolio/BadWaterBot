@@ -16,17 +16,13 @@ public class NewsCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public NewsCommand() {
-		helpStrings.add("add: add <source name> <source url>");
-		helpStrings.add("get: get <source name 1> <source name 2> ....<source name N>");
-		helpStrings.add("sources: prints a list of sources");
-		helpStrings.add("Update: Updates all news sources");
+		addHelpStrings();
 	}
 
 	@Override
 	public void exec(MessageEvent event) throws Exception {
 		BadwaterBot b = (BadwaterBot) event.getBot();
 		RSSReader reader = b.getReader();
-		String user = event.getUser().getNick();
 		String[] args = helperFuncs.toArgs(event.getMessage());
 
 		if (args[1].equalsIgnoreCase("add")) {
@@ -67,4 +63,15 @@ public class NewsCommand implements Command<MessageEvent> {
 	public ArrayList<String> getHelpString() {
 		return helpStrings;
 	}
+
+	@Override
+	public void addHelpStrings() {
+
+		helpStrings.add("add: add <source name> <source url>");
+		helpStrings.add("get: get <source name 1> <source name 2> ....<source name N>");
+		helpStrings.add("sources: prints a list of sources");
+		helpStrings.add("Update: Updates all news sources");
+
+	}
+
 }

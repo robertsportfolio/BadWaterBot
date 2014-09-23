@@ -19,7 +19,7 @@ public class GameDevBotListener extends ListenerAdapter {
 	private Logger logger;
 
 	public GameDevBotListener() throws IOException {
-		logger = new Logger("./Logs/GameDevLogs");
+		logger = new Logger("./Logs/GameDevLogs", 0);
 
 	}
 
@@ -43,18 +43,21 @@ public class GameDevBotListener extends ListenerAdapter {
 		}
 	}
 
-	public void onPrivateMessage(PrivateMessageEvent e) throws IOException {
+	public void onPrivateMessage(PrivateMessageEvent e) throws IOException, InterruptedException {
 
 		if (e.getUser().getNick().equalsIgnoreCase("GameDevBot")) {
 			WaitForQueue queue = new WaitForQueue(e.getBot());
+
 			while (true) {
-				if (!e.getMessage().endsWith("[link][comment]")) {
+				PrivateMessageEvent pmEvent = queue.waitFor(PrivateMessageEvent.class);
+				if (!pmEvent.getMessage().endsWith("[link][comment]")) {
 					logger.log(e.getMessage());
-					e.getBot().sendIRC().message("irnix", e.getMessage());
+					e.getBot().sendIRC().message("irinix", e.getMessage());
 				}
-				else if (e.getMessage().endsWith("[link][comment]")) {
+				else if (pmEvent.getMessage().endsWith("[link][comment]")) {
 					logger.log(e.getMessage());
-					e.getBot().sendIRC().message("irnix", e.getMessage());
+					e.getBot().sendIRC().message("irinix", e.getMessage());
+
 					queue.close();
 					return;
 				}

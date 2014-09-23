@@ -4,7 +4,6 @@ import com.badwater.bot.core.BadwaterBot;
 import com.badwater.bot.core.GameDevBotListener;
 import com.badwater.bot.core.LearnerListener;
 import com.badwater.bot.core.Listener;
-import com.badwater.bot.helpers.ConfigManager;
 import org.pircbotx.Configuration;
 import org.pircbotx.exception.IrcException;
 
@@ -17,7 +16,6 @@ import java.sql.SQLException;
 public class Main {
 	//bot shit. stuff will be added here.
 	private static BadwaterBot bot;
-	private static ConfigManager cfgmgr = new ConfigManager();
 
 	public static void main(String args[]) throws SQLException, IOException, IrcException, ClassNotFoundException {
 		Configuration c = new Configuration.Builder().setName("BadWater_Bill")

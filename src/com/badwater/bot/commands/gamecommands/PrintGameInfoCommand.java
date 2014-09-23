@@ -28,4 +28,11 @@ public class PrintGameInfoCommand implements Command<MessageEvent> {
 	public ArrayList<String> getHelpString() {
 		return null;
 	}
+
+	@Override
+	public void addHelpStrings() {
+
+	}
+
+
 }

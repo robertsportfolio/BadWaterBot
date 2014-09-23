@@ -3,6 +3,8 @@ package com.badwater.bot.commands;
 import org.pircbotx.hooks.Event;
 import org.pircbotx.hooks.events.MessageEvent;
 
+import java.util.ArrayList;
+
 /**
  * Created by irinix on 8/3/14.
  */
@@ -13,5 +15,7 @@ public interface Command<e extends Event> {
 
 	public String getAlias();
 
-	public java.util.ArrayList<String> getHelpString();
+	public ArrayList<String> getHelpString();
+
+	public void addHelpStrings();
 }

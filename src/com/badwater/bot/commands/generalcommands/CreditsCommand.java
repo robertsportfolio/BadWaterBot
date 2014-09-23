@@ -13,7 +13,7 @@ public class CreditsCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public CreditsCommand() {
-		helpStrings.add(" :prints the name of my creator ");
+		addHelpStrings();
 	}
 
 	@Override
@@ -38,4 +38,13 @@ public class CreditsCommand implements Command<MessageEvent> {
 	public ArrayList<String> getHelpString() {
 		return helpStrings;
 	}
+
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add(" :prints the name of my creator ");
+
+
+	}
+
+
 }

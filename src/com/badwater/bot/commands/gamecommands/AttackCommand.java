@@ -55,4 +55,8 @@ public class AttackCommand implements Command<MessageEvent> {
 	public ArrayList<String> getHelpString() {
 		return null;
 	}
+
+	public void addHelpStrings() {
+
+	}
 }

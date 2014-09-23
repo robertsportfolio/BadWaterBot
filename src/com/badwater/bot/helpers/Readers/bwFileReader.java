@@ -20,7 +20,11 @@ public class bwFileReader {
 		try (BufferedReader in = new BufferedReader(new FileReader(pathToFile))) {
 			String line = "";
 			while ((line = in.readLine()) != null) {
-				lines.add(line);
+				//ignore comments
+				System.out.println(line);
+				if (!line.startsWith("#")) {
+					lines.add(line);
+				}
 			}
 
 		}

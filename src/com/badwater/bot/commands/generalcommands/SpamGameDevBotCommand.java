@@ -12,28 +12,28 @@ public class SpamGameDevBotCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public SpamGameDevBotCommand() {
-		helpStrings.add("Kills The Bot");
+
 	}
 
 	@Override
 	public void exec(MessageEvent e) throws Exception {
-
-		if (e.getUser().getNick().equalsIgnoreCase("irinix") && e.getUser().isVerified()) {
-			e.getChannel().send().message("Okay: " + e.getUser().getNick() + " I'm Going Away Now!");
-			e.getChannel().getBot().sendIRC().quitServer("Was Told To Go Away");
-		}
-		else {
-			e.getChannel().send().message("I'm sorry " + e.getUser().getNick() + " Only Irinix can do that!");
-		}
+		return;
 	}
 
 	@Override
 	public String getAlias() {
-		return "die";
+		return "SpamGameDevBot";
 	}
 
 	@Override
 	public ArrayList<String> getHelpString() {
 		return helpStrings;
 	}
+
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add("Does Nothing");
+	}
+
+
 }

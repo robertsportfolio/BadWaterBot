@@ -8,43 +8,60 @@ import java.util.Date;
  */
 public class Logger {
 
-	private final String LogPath;
-	private       String LogFilePath;
-	private       String dateStamp;
+	private String LogPath;
+	private String LogFilePath;
+	private String dateStamp;
 
 
-	public Logger(String LogPath) throws IOException {
+	public Logger(String LogPath, int flag) throws IOException {
 		this.LogPath = LogPath;
-		if (!initLogger()) {
+		if (!initLogger(flag)) {
 			System.out.println("Error Initializing Logger");
 		}
 	}
 
-	private boolean initLogger() throws IOException {
-		dateStamp = new Date().toString().substring(0, 9).replace(" ", "-").trim();
+	/**
+	 * *@param flag can be 0, 1, use 1 for IRC Channel logging.
+	 */
+	private boolean initLogger(int flag) throws IOException {
+		dateStamp = generateDateStamp();
 		boolean success = false;
 		File file = new File(LogPath);
 		if (!file.exists()) {
-			System.out.println("Logging Directory Does Not Exist.  Creating it.");
+			System.out.println("Logging Directory Does Not Exist.  Creating: ");
 			success = file.mkdirs();
 		}
 		else if (file.exists()) {
 			System.out.println("Logging Directory Exists.  Using Directory: " + LogPath);
 			success = true;
 		}
-		LogFilePath = LogPath + "/" + dateStamp;
-
-		log("=======New Run At: " + new Date().toString());
-
+		if (flag == 0) {
+			LogFilePath = LogPath + "/" + dateStamp;
+			log("=======New Run At: " + generateTimeStamp());
+		}
 
 		return success;
 	}
 
+	private String generateTimeStamp() {
+		return new Date().toString().substring(10, 19).replace(" ", "::");
+	}
+
+	public void log(String ChannelName, String logMsg) throws IOException {
+		LogPath += ChannelName.replace("#", "");
+		initLogger(0);
+		LogFilePath = LogPath + "/" + generateDateStamp();
+		log(generateTimeStamp() + "::" + logMsg);
+	}
+
+	private String generateDateStamp() {
+		return new Date().toString().substring(0, 10).replace(" ", "-").trim();
+	}
+
 	public void log(String logMsg) throws IOException {
-		String dateStampCheck = new Date().toString().substring(0, 10).replace(" ", "-").trim();
-		System.out.println(dateStampCheck);
-		if (!dateStamp.equalsIgnoreCase(dateStampCheck)) {
-			dateStamp = dateStampCheck;
+
+		if (!dateStamp.equals(generateDateStamp())) {
+			dateStamp = generateDateStamp();
 			LogFilePath = LogPath + "/" + dateStamp;
 		}
 		String timeStamp = new Date().toString().substring(10, 19).trim().replace(" ", "-");

@@ -12,7 +12,6 @@ public class SourceCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public SourceCommand() {
-		helpStrings.add(" :prints the source URL ");
 	}
 
 	@Override
@@ -29,4 +28,11 @@ public class SourceCommand implements Command<MessageEvent> {
 	public ArrayList<String> getHelpString() {
 		return helpStrings;
 	}
+
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add(" :prints the source URL ");
+
+	}
+
 }

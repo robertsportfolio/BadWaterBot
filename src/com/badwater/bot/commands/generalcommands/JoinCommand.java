@@ -13,8 +13,7 @@ public class JoinCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public JoinCommand() {
-		helpStrings.add("Joins a new Channel.");
-		helpStrings.add(" #<channelName>");
+		addHelpStrings();
 	}
 
 	@Override
@@ -26,10 +25,10 @@ public class JoinCommand implements Command<MessageEvent> {
 				continue;
 			}
 
-			else if (s.startsWith("#")) {
+			else if (isThisAChannelName(s)) {
 				if (s.contains(",")) {
-					s = s.substring(s.indexOf("#"), s.indexOf(","));
-					s = s.replace(",", "");
+					s = s.substring(s.indexOf("#"), s.indexOf(",") - 1);
+					helperFuncs.debugGotHere(s);
 				}
 			}
 			e.getChannel().send().message("Okay " + e.getUser().getNick() + " I'll see you in: " + s);
@@ -37,6 +36,14 @@ public class JoinCommand implements Command<MessageEvent> {
 		}
 	}
 
+
+	private boolean isThisAChannelName(String s) {
+		boolean success = false;
+		if (s.startsWith("#")) {
+			success = true;
+		}
+		return success;
+	}
 
 	@Override
 	public String getAlias() {
@@ -48,4 +55,12 @@ public class JoinCommand implements Command<MessageEvent> {
 
 		return helpStrings;
 	}
+
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add("Joins a new Channel.");
+		helpStrings.add(" #<channelName>");
+	}
+
+
 }

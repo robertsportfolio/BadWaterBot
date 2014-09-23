@@ -30,7 +30,7 @@ public class RSSReader {
 			System.out.println("Error!  No Such File!" + file.getPath());
 		}
 		else {
-			try (BufferedReader in = new BufferedReader(new bwFileReader(file))) {
+			try (BufferedReader in = new BufferedReader(new FileReader(file))) {
 				String lineIn = "";
 				String[] args = {"", ""};
 				while ((lineIn = in.readLine()) != null) {
