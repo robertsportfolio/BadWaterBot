@@ -3,6 +3,7 @@ package com.badwater.bot.commands.generalcommands;
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.helpers.Loggers.Logger;
 import com.badwater.bot.helpers.Readers.bwFileReader;
+import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -15,18 +16,29 @@ import java.util.ArrayList;
 public class DieCommand implements Command<MessageEvent> {
 	private final bwFileReader in;
 	private final Logger       logger;
-	ArrayList<String> helpStrings     = new ArrayList<String>();
+	ArrayList<String> helpStrings = new ArrayList<String>();
+	private ArrayList<String> notesList = new ArrayList<String>();
 
 	public DieCommand() throws IOException {
 		logger = new Logger("./Logs/ServerLogs/", 0);
 		in = new bwFileReader("./DB/Configs/.authUsers");
 		in.read();
 		addHelpStrings();
+		addNoteStrings();
+	}
+
+	private void addNoteStrings() {
+		notesList.add("Misuse of this command, may result in a ");
+		notesList.add("perma-ban from any channel registered to Badwater.)");
+		notesList.add("Try it if you do not believe me.");
 	}
 
 	@Override
 	public void exec(MessageEvent e) throws Exception {
 		User issuingUser = e.getUser();
+		String chanName = e.getChannel().getName();
+		String[] parseMsg = helperFuncs.toArgs(e.getMessage());
+
 		String issuingUserName = e.getUser().getNick();
 		if (!checkAuthorizedUsers(issuingUser)) {
 			dennisNedry(e);
@@ -36,11 +48,20 @@ public class DieCommand implements Command<MessageEvent> {
 			           issuingUserName + " tried to shutdown the bot without authorization.");
 		}
 		else {
+
+			if (parseMsg.length <= 1) {
+				logger.log(chanName, "Was Told To Quit By: " + issuingUserName);
+			}
+			else if (parseMsg.length > 1) {
+				String reason = "";
+				for (int i = 1; i < parseMsg.length; i++) {
+					reason += parseMsg[i] + " ";
+				}
+				logger.log(chanName, "Was Told To Quit By: " + issuingUserName + "For: " + reason);
+			}
+
 			e.getChannel().send().message("Okay " + issuingUserName + " I'll Go Away Now.");
 			e.getBot().sendIRC().quitServer("Was Told To Go Away!");
-			logger.log(e.getChannel().getName(), "Was Told To Quit By: " + issuingUserName);
-
-
 		}
 	}
 
@@ -72,16 +93,19 @@ public class DieCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 		return helpStrings;
 	}
 
 	@Override
+	public ArrayList<String> getNoteList() {
+		return notesList;
+	}
+
+	@Override
 	public void addHelpStrings() {
-		helpStrings.add(" :Kills The Bot");
-		helpStrings.add(
-			   " :Misuse of this command, may result in a perma-ban from any channel registered to Badwater.)");
-		helpStrings.add(" :Try it if you do not believe me.");
+		helpStrings.add("Use: Kills The Bot");
+		helpStrings.add("Syntax: ?die <reason>(optional)");
 
 
 	}

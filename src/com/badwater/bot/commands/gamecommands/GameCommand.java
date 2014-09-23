@@ -33,6 +33,15 @@ public class GameCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public ArrayList<String> getHelpList() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getNoteList() {
+		return null;
+	}
+
 	public ArrayList<String> getHelpString() {
 		return null;
 	}

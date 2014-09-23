@@ -11,9 +11,16 @@ import java.util.ArrayList;
  */
 public class JoinCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
+	private ArrayList<String> notesList = new ArrayList<String>();
 
 	public JoinCommand() {
+		addNotesStrings();
 		addHelpStrings();
+
+	}
+
+	private void addNotesStrings() {
+		notesList.add("NONE");
 	}
 
 	@Override
@@ -51,15 +58,20 @@ public class JoinCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 
 		return helpStrings;
 	}
 
 	@Override
+	public ArrayList<String> getNoteList() {
+		return notesList;
+	}
+
+	@Override
 	public void addHelpStrings() {
-		helpStrings.add("Joins a new Channel.");
-		helpStrings.add(" #<channelName>");
+		helpStrings.add("Use: Joins a new Channel.");
+		helpStrings.add("Syntax: ?join #<channelName>");
 	}
 
 

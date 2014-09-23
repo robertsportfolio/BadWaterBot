@@ -15,7 +15,11 @@ public interface Command<e extends Event> {
 
 	public String getAlias();
 
-	public ArrayList<String> getHelpString();
+	public ArrayList<String> getHelpList();
+
+	public ArrayList<String> getNoteList();
 
 	public void addHelpStrings();
+
+
 }

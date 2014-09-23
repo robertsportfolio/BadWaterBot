@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * Created by irinix on 8/3/14.
  */
 public class Listener extends ListenerAdapter {
-	protected ArrayList<Command> commands     = new ArrayList<>();
-	protected String             prefix       = "?";
+	protected ArrayList<Command> commands = new ArrayList<>();
+	protected String             prefix   = "?";
 	private Logger logger;
 
 	public Listener() throws IOException {
@@ -100,33 +100,49 @@ public class Listener extends ListenerAdapter {
 	}
 
 	private void handleHelp(MessageEvent e, String[] parsedMsg) {
-
+		String divider = "=================";
+		String moreInfoMsg = "Type ?help <command> for more info.";
 		User issuingUser = e.getUser();
-		String issuingUserNick = issuingUser.getNick();
 		if (parsedMsg.length == 1) {
-
+			issuingUser.send().notice(divider);
+			issuingUser.send().notice("Available Commands Are:");
 			for (Command c : commands) {
 				String fullCommand = prefix + c.getAlias();
-				issuingUser.send().notice(fullCommand);
-				issuingUser.send().notice("Syntax:");
-				if (!c.getHelpString().equals(null)) {
-					ArrayList<String> helpList = c.getHelpString();
-					for (String s : helpList) {
-						issuingUser.send().notice(fullCommand + ":" + s);
-					}
-				}
+				issuingUser.send().notice("\t\t" + fullCommand);
 			}
+			issuingUser.send().notice(divider);
+			issuingUser.send().notice(moreInfoMsg);
+			issuingUser.send().notice(divider);
+
+
 		}
 		else if (parsedMsg.length == 2) {
-			String helpTopic = parsedMsg[1];
+			String helpTopic = parsedMsg[1].replace("?", "");
 
+			System.out.println(helpTopic);
 			for (Command c : commands) {
 				if (c.getAlias().equalsIgnoreCase(helpTopic)) {
-					String[] helpList = (String[]) c.getHelpString().toArray(
-						   new String[c.getHelpString().size()]);
+					ArrayList<String> helpList = c.getHelpList();
+					ArrayList<String> notesList = c.getNoteList();
+					String fullCommand = prefix + c.getAlias();
+					issuingUser.send().notice(fullCommand + ":");
+					issuingUser.send().notice(divider);
 					for (String s : helpList) {
-						e.getBot().sendIRC().notice(issuingUserNick, s);
+						if (s.startsWith("Use") || s.startsWith("Syntax")) {
+							issuingUser.send().notice(s);
+						}
+
+						else {
+							issuingUser.send().notice("\t\t\t" + fullCommand + " " + s);
+						}
 					}
+					issuingUser.send().notice(divider);
+					issuingUser.send().notice("Notes:");
+					issuingUser.send().notice(divider);
+					for (String s : notesList) {
+						issuingUser.send().notice("\t\t\t" + s);
+					}
+					issuingUser.send().notice(divider);
 				}
 			}
 		}

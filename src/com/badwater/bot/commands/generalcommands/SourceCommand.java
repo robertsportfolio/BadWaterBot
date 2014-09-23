@@ -10,8 +10,15 @@ import java.util.ArrayList;
  */
 public class SourceCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
+	private ArrayList<String> noteList = new ArrayList<String>();
 
 	public SourceCommand() {
+		addHelpStrings();
+		addNoteStrings();
+	}
+
+	private void addNoteStrings() {
+		noteList.add("NONE");
 	}
 
 	@Override
@@ -25,13 +32,20 @@ public class SourceCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 		return helpStrings;
 	}
 
 	@Override
+	public ArrayList<String> getNoteList() {
+		return noteList;
+	}
+
+
+	@Override
 	public void addHelpStrings() {
-		helpStrings.add(" :prints the source URL ");
+		helpStrings.add("Use :prints the source URL ");
+		helpStrings.add("Syntax: ?Source");
 
 	}
 

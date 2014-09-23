@@ -14,9 +14,16 @@ import java.util.ArrayList;
 @SuppressWarnings("DefaultFileTemplate")
 public class NewsCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
+	ArrayList<String> noteStrings = new ArrayList<>();
 
 	public NewsCommand() {
+		addNoteStrings();
 		addHelpStrings();
+	}
+
+	private void addNoteStrings() {
+		noteStrings.add("Must be in XML Formatted RSS Feed.");
+		noteStrings.add("This System is Still Buggy.  Please be patient with it.");
 	}
 
 	@Override
@@ -60,17 +67,25 @@ public class NewsCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 		return helpStrings;
 	}
 
 	@Override
-	public void addHelpStrings() {
+	public ArrayList<String> getNoteList() {
+		return noteStrings;
+	}
 
+
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add("Use: Add View and Update News Sources");
+		helpStrings.add("Syntax:");
 		helpStrings.add("add: add <source name> <source url>");
 		helpStrings.add("get: get <source name 1> <source name 2> ....<source name N>");
 		helpStrings.add("sources: prints a list of sources");
 		helpStrings.add("Update: Updates all news sources");
+
 
 	}
 

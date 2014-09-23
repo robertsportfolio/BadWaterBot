@@ -11,9 +11,15 @@ import java.util.ArrayList;
  */
 public class CreditsCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
+	private ArrayList<String> notesList = new ArrayList<String>();
 
 	public CreditsCommand() {
+		addNoteStrings();
 		addHelpStrings();
+	}
+
+	private void addNoteStrings() {
+		notesList.add("NONE");
 	}
 
 	@Override
@@ -35,13 +41,19 @@ public class CreditsCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 		return helpStrings;
 	}
 
 	@Override
+	public ArrayList<String> getNoteList() {
+		return notesList;
+	}
+
+	@Override
 	public void addHelpStrings() {
-		helpStrings.add(" :prints the name of my creator ");
+		helpStrings.add("Use: Prints the name of my creator");
+		helpStrings.add("Syntax: ?credits");
 
 
 	}

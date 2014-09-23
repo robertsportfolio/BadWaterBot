@@ -11,9 +11,15 @@ import java.util.ArrayList;
  */
 public class SayCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
+	ArrayList<String> noteList    = new ArrayList<>();
 
 	public SayCommand() {
 		addHelpStrings();
+		addNoteStrings();
+	}
+
+	private void addNoteStrings() {
+		noteList.add("I must be join'd to <#channel>");
 	}
 
 	@Override
@@ -38,14 +44,21 @@ public class SayCommand implements Command<MessageEvent> {
 	}
 
 	@Override
-	public ArrayList<String> getHelpString() {
+	public ArrayList<String> getHelpList() {
 		return helpStrings;
 	}
 
 	@Override
-	public void addHelpStrings() {
-		helpStrings.add("<#channel name> <message> : Says Message To Channel.");
+	public ArrayList<String> getNoteList() {
+		return noteList;
+	}
 
+	@Override
+	public void addHelpStrings() {
+		helpStrings.add("Use: Says <message> on <#channel>");
+		helpStrings.add("Syntax: ?Say <#channel name> <message> : Says Message To Channel.");
+		helpStrings.add("Notes:");
+		helpStrings.add("\t\tI Must be ?Join'd to  <#channel>");
 	}
 
 
