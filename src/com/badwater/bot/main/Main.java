@@ -22,12 +22,12 @@ public class Main {
 			   .setServerHostname("weber.freenode.net")
 			   .setNickservPassword("givem3thecookie")
 			   .setCapEnabled(false)
-			   .setLogin("BW_BILL")
+			   .setLogin("BW_Bill")
 			   .addListener(new Listener())
 			   .addListener(new LearnerListener())
 			   .addListener(new GameDevBotListener())
 			   .addAutoJoinChannel("#badwater")
-					 //.addAutoJoinChannel("#reddit-gamedev")
+			   .addAutoJoinChannel("#reddit-gamedev")
 			   .buildConfiguration();
 		bot = new BadwaterBot(c);
 		bot.startBot();

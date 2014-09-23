@@ -57,8 +57,7 @@ public class SayCommand implements Command<MessageEvent> {
 	public void addHelpStrings() {
 		helpStrings.add("Use: Says <message> on <#channel>");
 		helpStrings.add("Syntax: ?Say <#channel name> <message> : Says Message To Channel.");
-		helpStrings.add("Notes:");
-		helpStrings.add("\t\tI Must be ?Join'd to  <#channel>");
+
 	}
 
 

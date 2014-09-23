@@ -14,6 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by irinix on 8/3/14.
  */
+
 public class Listener extends ListenerAdapter {
 	protected ArrayList<Command> commands = new ArrayList<>();
 	protected String             prefix   = "?";
@@ -27,6 +28,7 @@ public class Listener extends ListenerAdapter {
 		commands.add(new SayCommand());
 		commands.add(new SourceCommand());
 		commands.add(new CreditsCommand());
+
 
 		logger = new Logger("./Logs/IRC/", 1);
 
