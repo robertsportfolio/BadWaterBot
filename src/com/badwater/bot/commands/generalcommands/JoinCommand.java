@@ -14,29 +14,32 @@ public class JoinCommand implements Command<MessageEvent> {
 
 	public JoinCommand() {
 		helpStrings.add("Joins a new Channel.");
-		helpStrings.add("Join #<channelName>");
+		helpStrings.add(" #<channelName>");
 	}
-	@Override public void exec(MessageEvent e) throws Exception {
-		String[] parsedCmd = helperFuncs.toArgs ( e.getMessage () );
 
-		for ( String s : parsedCmd ) {
-			if ( s.startsWith ( "?join" ) ) {
+	@Override
+	public void exec(MessageEvent e) throws Exception {
+		String[] parsedCmd = helperFuncs.toArgs(e.getMessage());
+
+		for (String s : parsedCmd) {
+			if (s.startsWith("?join")) {
 				continue;
 			}
 
-			else if ( s.startsWith ( "#" ) ) {
-				if ( s.contains ( "," ) ) {
-					s = s.substring ( s.indexOf ( "#" ), s.indexOf ( "," ) );
-					s = s.replace ( ",", "" );
+			else if (s.startsWith("#")) {
+				if (s.contains(",")) {
+					s = s.substring(s.indexOf("#"), s.indexOf(","));
+					s = s.replace(",", "");
 				}
 			}
-			e.getChannel ().send ().message ( "Okay " + e.getUser ().getNick () + " I'll see you in: " + s );
-			e.getBot ().sendIRC ().joinChannel ( s );
+			e.getChannel().send().message("Okay " + e.getUser().getNick() + " I'll see you in: " + s);
+			e.getBot().sendIRC().joinChannel(s);
 		}
 	}
 
 
-	@Override public String getAlias() {
+	@Override
+	public String getAlias() {
 		return "join";
 	}
 

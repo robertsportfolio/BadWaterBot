@@ -13,7 +13,7 @@ public class SayCommand implements Command<MessageEvent> {
 	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public SayCommand() {
-		helpStrings.add("<#channel name> <message>");
+		helpStrings.add("<#channel name> <message> : Says Message To Channel.");
 	}
 
 	@Override
@@ -39,6 +39,6 @@ public class SayCommand implements Command<MessageEvent> {
 
 	@Override
 	public ArrayList<String> getHelpString() {
-		return null;
+		return helpStrings;
 	}
 }

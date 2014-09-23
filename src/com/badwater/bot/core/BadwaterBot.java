@@ -3,7 +3,7 @@ package com.badwater.bot.core;
 //local imports
 
 import com.badwater.bot.Game.GameHandler;
-import com.badwater.bot.helpers.RSSReader;
+import com.badwater.bot.helpers.Readers.RSSReader;
 import org.pircbotx.Configuration;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class BadwaterBot extends BadwaterBotCore {
 	//Create a new RSS Reader for this bot
-	private RSSReader reader = new RSSReader();
+	private RSSReader   reader      = new RSSReader();
 	//Create A Learner for This Bot
 	//private Learner learner;
 	//create a new game for this bot

@@ -2,7 +2,6 @@ package com.badwater.bot.core;
 
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.commands.gamecommands.GameCommand;
-import com.badwater.bot.commands.gamecommands.PrintGameInfoCommand;
 import com.badwater.bot.commands.generalcommands.*;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -23,15 +22,23 @@ public class Listener extends ListenerAdapter {
 		commands.add(new DieCommand());
 		commands.add(new NewsCommand());
 		commands.add(new JoinCommand());
-		commands.add(new HelpCommand(this));
 		commands.add(new GameCommand());
 		commands.add(new SayCommand());
-		commands.add(new PrintGameInfoCommand());
+		commands.add(new SourceCommand());
+		commands.add(new CreditsCommand());
+		//THIS MUST BE LAST
+		commands.add(new HelpCommand(this));
 	}
 
 	public void onMessage(MessageEvent e) throws Exception {
+
+		String hiBill = "Hi Bill";
 		if (e.getChannel().getName().contains("BWGame")) {
 			//just ignore the message if it's in a game channel.
+		}
+		else if (e.getMessage().equalsIgnoreCase(hiBill)) {
+			String userName = e.getUser().getNick();
+			e.getChannel().send().message("Hello " + userName + " Loverly Day, Isn't it?");
 		}
 		else {
 			String[] parseMsg = helperFuncs.toArgs(e.getMessage());

@@ -2,7 +2,7 @@ package com.badwater.bot.commands.generalcommands;
 
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.helpers.RSSReader;
+import com.badwater.bot.helpers.Readers.RSSReader;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.events.MessageEvent;
 

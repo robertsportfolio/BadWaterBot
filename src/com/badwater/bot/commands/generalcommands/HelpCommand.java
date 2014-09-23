@@ -19,8 +19,13 @@ public class HelpCommand implements Command<MessageEvent> {
 		helpStrings.add("Returns Command Strings");
 		l = listener;
 		for (Command c : l.getCommands()) {
-			CommandsHelp.put(this, getHelpString());
-			CommandsHelp.put(c, c.getHelpString());
+			if (c.getHelpString() != null) {
+				CommandsHelp.put(c, c.getHelpString());
+
+			}
+			else {
+				continue;
+			}
 		}
 	}
 
@@ -28,7 +33,7 @@ public class HelpCommand implements Command<MessageEvent> {
 	@Override
 	public void exec(MessageEvent event) throws Exception {
 		for (Command c : CommandsHelp.keySet()) {
-			event.getUser().send().notice(l.getPrefix() + c.getAlias() + " : ");
+			event.getUser().send().notice(l.getPrefix() + c.getAlias());
 			event.getUser().send().notice("Syntax:");
 			for (String s : CommandsHelp.get(c)) {
 				event.getUser().send().notice(l.getPrefix() + c.getAlias() + " " + s);

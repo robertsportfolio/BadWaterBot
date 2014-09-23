@@ -13,6 +13,7 @@ public abstract class BadwaterBotCore extends PircBotX {
 
 
 	protected Configuration config;
+	protected String        version;
 
 	/**
 	 * Constructs a PircBotX with the provided configuration.
@@ -20,7 +21,8 @@ public abstract class BadwaterBotCore extends PircBotX {
 	 * @param configuration
 	 */
 	public BadwaterBotCore(Configuration<? extends PircBotX> configuration) {
-		super ( configuration );
+		super(configuration);
+		version = "1.0";
 	}
 
 
@@ -28,29 +30,32 @@ public abstract class BadwaterBotCore extends PircBotX {
 
 
 	public String getName() {
-		return this.getNick ();
+		return this.getNick();
 
 	}
 
 
 	public int getId() {
-		return this.getBotId ();
+		return this.getBotId();
 	}
 
 	protected void run() throws IOException, IrcException {
-		if ( this.config.getNickservPassword () != null ) {
-			System.out.println ( "Password Does != Null, Logging in." );
+		if (this.config.getNickservPassword() != null) {
+			System.out.println("Password Does != Null, Logging in.");
 		}
-		this.startBot ();
+		this.startBot();
 	}
 
 	public void die(String sender) {
-		this.sendIRC ().message ( sender, "Okay, I'll Go Away Now!" );
-		this.sendIRC ().quitServer ( "Was Told To Go Away By" + sender );
-		this.stopBotReconnect ();
+		this.sendIRC().message(sender, "Okay, I'll Go Away Now!");
+		this.sendIRC().quitServer("Was Told To Go Away By" + sender);
+		this.stopBotReconnect();
 	}
 
 
+	public String getVersion() {
+		return version;
+	}
 }
 
 
