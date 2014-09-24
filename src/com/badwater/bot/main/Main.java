@@ -1,7 +1,6 @@
 package com.badwater.bot.main;
 
 import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.core.GameDevBotListener;
 import com.badwater.bot.core.LearnerListener;
 import com.badwater.bot.core.Listener;
 import org.pircbotx.Configuration;
@@ -25,7 +24,7 @@ public class Main {
 			   .setLogin("BW_Bill")
 			   .addListener(new Listener())
 			   .addListener(new LearnerListener())
-			   .addListener(new GameDevBotListener())
+				      //.addListener(new GameDevBotListener())
 			   .addAutoJoinChannel("#badwater")
 			   .addAutoJoinChannel("#reddit-gamedev")
 			   .buildConfiguration();

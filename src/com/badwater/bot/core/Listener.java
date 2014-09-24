@@ -25,6 +25,7 @@ public class Listener extends ListenerAdapter {
 		commands.add(new NewsCommand());
 		commands.add(new JoinCommand());
 		//commands.add(new GameCommand());
+		commands.add(new GoogleCommand());
 		commands.add(new SayCommand());
 		commands.add(new SourceCommand());
 		commands.add(new CreditsCommand());

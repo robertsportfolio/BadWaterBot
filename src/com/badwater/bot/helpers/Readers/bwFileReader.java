@@ -1,5 +1,7 @@
 package com.badwater.bot.helpers.Readers;
 
+import com.badwater.bot.helpers.helperFuncs;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,16 +14,19 @@ public class bwFileReader {
 	private String pathToFile;
 	private ArrayList<String> lines = new ArrayList<String>();
 
+
 	public bwFileReader(String pathToFile) {
 		this.pathToFile = pathToFile;
 	}
 
 	public void read() throws IOException {
+		helperFuncs.debugGotHere("Read(" + pathToFile + ")");
+
 		try (BufferedReader in = new BufferedReader(new FileReader(pathToFile))) {
 			String line = "";
 			while ((line = in.readLine()) != null) {
+
 				//ignore comments
-				System.out.println(line);
 				if (!line.startsWith("#")) {
 					lines.add(line);
 				}
@@ -32,5 +37,22 @@ public class bwFileReader {
 
 	public ArrayList<String> getLines() {
 		return lines;
+	}
+
+	public String getAPIKey(String requestedKey) throws IOException {
+		read();
+		helperFuncs.debugGotHere(pathToFile);
+		for (String s : lines) {
+
+			if (s.contains("=")) {
+				String[] args = s.split("=");
+				if (args[0].equalsIgnoreCase(requestedKey)) {
+					return args[1];
+				}
+
+			}
+		}
+
+		return null;
 	}
 }
