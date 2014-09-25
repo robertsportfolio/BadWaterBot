@@ -4,7 +4,6 @@ import com.badwater.bot.commands.Command;
 import com.badwater.bot.commands.generalcommands.*;
 import com.badwater.bot.helpers.Loggers.Logger;
 import com.badwater.bot.helpers.helperFuncs;
-import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 public class Listener extends ListenerAdapter {
 	protected ArrayList<Command> commands = new ArrayList<>();
-	protected String             prefix   = "?";
+	protected String prefix = "test?";
 	private Logger logger;
 
 	public Listener() throws IOException {
@@ -30,7 +29,8 @@ public class Listener extends ListenerAdapter {
 		commands.add(new SourceCommand());
 		commands.add(new CreditsCommand());
 
-
+		//This must be the last command added
+		commands.add(new HelpCommand(this));
 		logger = new Logger("./Logs/IRC/", 1);
 
 	}
@@ -48,11 +48,8 @@ public class Listener extends ListenerAdapter {
 		else {
 			String[] parseMsg = helperFuncs.toArgs(e.getMessage());
 
-			if (parseMsg[0].equalsIgnoreCase("?Help")) {
-				handleHelp(e, parseMsg);
-			}
-			else if (parseMsg[0].startsWith(prefix)) {
-				String command = parseMsg[0].replace("?", "");
+			if (parseMsg[0].startsWith(prefix)) {
+				String command = parseMsg[0].replace(prefix, "");
 				boolean commandFound = processCommands(command);
 				if (!commandFound) {
 					e.getChannel().send().message("I'm Sorry, " + userName + " I Don't Understand: " + command);
@@ -102,54 +99,6 @@ public class Listener extends ListenerAdapter {
 		return success;
 	}
 
-	private void handleHelp(MessageEvent e, String[] parsedMsg) {
-		String divider = "=================";
-		String moreInfoMsg = "Type ?help <command> for more info.";
-		User issuingUser = e.getUser();
-		if (parsedMsg.length == 1) {
-			issuingUser.send().notice(divider);
-			issuingUser.send().notice("Available Commands Are:");
-			for (Command c : commands) {
-				String fullCommand = prefix + c.getAlias();
-				issuingUser.send().notice("\t\t" + fullCommand);
-			}
-			issuingUser.send().notice(divider);
-			issuingUser.send().notice(moreInfoMsg);
-			issuingUser.send().notice(divider);
-
-
-		}
-		else if (parsedMsg.length == 2) {
-			String helpTopic = parsedMsg[1].replace("?", "");
-
-			System.out.println(helpTopic);
-			for (Command c : commands) {
-				if (c.getAlias().equalsIgnoreCase(helpTopic)) {
-					ArrayList<String> helpList = c.getHelpList();
-					ArrayList<String> notesList = c.getNoteList();
-					String fullCommand = prefix + c.getAlias();
-					issuingUser.send().notice(fullCommand + ":");
-					issuingUser.send().notice(divider);
-					for (String s : helpList) {
-						if (s.startsWith("Use") || s.startsWith("Syntax")) {
-							issuingUser.send().notice(s);
-						}
-
-						else {
-							issuingUser.send().notice("\t\t\t" + fullCommand + " " + s);
-						}
-					}
-					issuingUser.send().notice(divider);
-					issuingUser.send().notice("Notes:");
-					issuingUser.send().notice(divider);
-					for (String s : notesList) {
-						issuingUser.send().notice("\t\t\t" + s);
-					}
-					issuingUser.send().notice(divider);
-				}
-			}
-		}
-	}
 }
 
 

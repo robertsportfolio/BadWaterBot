@@ -61,6 +61,11 @@ public class AttackCommand implements Command<MessageEvent> {
 		return null;
 	}
 
+	@Override
+	public String getTopicString() {
+		return null;
+	}
+
 	public ArrayList<String> getHelpString() {
 		return null;
 	}

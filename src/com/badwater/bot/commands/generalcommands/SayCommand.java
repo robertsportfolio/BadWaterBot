@@ -54,6 +54,11 @@ public class SayCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public String getTopicString() {
+		return "Say Something On A Channel";
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Says <message> on <#channel>");
 		helpStrings.add("Syntax: ?Say <#channel name> <message> : Says Message To Channel.");

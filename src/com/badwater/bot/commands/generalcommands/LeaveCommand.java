@@ -66,6 +66,11 @@ public class LeaveCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public String getTopicString() {
+		return "Leaves A Channel";
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Leaves a Channel.");
 		helpStrings.add("Syntax: ?leave #<channelName>");

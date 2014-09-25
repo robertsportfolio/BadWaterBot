@@ -69,6 +69,11 @@ public class JoinCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public String getTopicString() {
+		return "Joins A Channel";
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Joins a new Channel.");
 		helpStrings.add("Syntax: ?join #<channelName>");

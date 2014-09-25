@@ -59,6 +59,11 @@ public class GoogleCommand implements Command<MessageEvent> {
 		return noteStrings;
 	}
 
+	@Override
+	public String getTopicString() {
+		return "Uses The Google.  Quite Possibly For Maps";
+	}
+
 
 	@Override
 	public void addHelpStrings() {

@@ -103,6 +103,11 @@ public class DieCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public String getTopicString() {
+		return "Kills The Bot";
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Kills The Bot");
 		helpStrings.add("Syntax: ?die <reason>(optional)");

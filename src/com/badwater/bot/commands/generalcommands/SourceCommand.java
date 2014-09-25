@@ -41,6 +41,11 @@ public class SourceCommand implements Command<MessageEvent> {
 		return noteList;
 	}
 
+	@Override
+	public String getTopicString() {
+		return "Prints The Source URL";
+	}
+
 
 	@Override
 	public void addHelpStrings() {

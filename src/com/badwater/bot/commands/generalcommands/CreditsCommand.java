@@ -22,6 +22,7 @@ public class CreditsCommand implements Command<MessageEvent> {
 		notesList.add("NONE");
 	}
 
+
 	@Override
 	public void exec(MessageEvent event) throws Exception {
 		BadwaterBot b = (BadwaterBot) event.getBot();
@@ -48,6 +49,11 @@ public class CreditsCommand implements Command<MessageEvent> {
 	@Override
 	public ArrayList<String> getNoteList() {
 		return notesList;
+	}
+
+	@Override
+	public String getTopicString() {
+		return "Prints The Credits";
 	}
 
 	@Override

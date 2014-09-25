@@ -19,6 +19,8 @@ public interface Command<e extends Event> {
 
 	public ArrayList<String> getNoteList();
 
+	public String getTopicString();
+
 	public void addHelpStrings();
 
 

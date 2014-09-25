@@ -76,6 +76,11 @@ public class NewsCommand implements Command<MessageEvent> {
 		return noteStrings;
 	}
 
+	@Override
+	public String getTopicString() {
+		return "Various News Functions";
+	}
+
 
 	@Override
 	public void addHelpStrings() {
