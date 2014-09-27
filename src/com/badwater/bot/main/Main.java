@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String args[]) throws SQLException, IOException, IrcException, ClassNotFoundException {
 		Configuration c = new Configuration.Builder().setName("BadWater_Bill")
 			   .setServerHostname("chat.freenode.net")
-			   .setNickservPassword("givem3thecookie")
+			   .setNickservPassword("*******")
 			   .setCapEnabled(false)
 			   .setLogin("BW_Bill")
 			   .addListener(new Listener())
