@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class bwFileWriter {
 
-	public bwFileWriter() {
+	public bwFileWriter(String path) {
 
 	}
 

@@ -65,12 +65,18 @@ public class bwFileReader {
 			String[] args = s.split("=");
 			if (args[0].equalsIgnoreCase(userName)) {
 				args = args[1].split(",");
-				for (String s1 : args) {
-					System.out.println(s1);
-					if ((s1.equalsIgnoreCase("all")) || s1.equalsIgnoreCase(cmdName)) {
-						System.out.println(s1);
-						return true;
+				if (args[0].equalsIgnoreCase("all")) {
+					System.out.println(userName + " " + args[0]);
+					return true;
+				}
+				else {
+					for (String s1 : args) {
+						System.out.println(userName + " " + s1);
+						if (s1.equalsIgnoreCase(cmdName)) {
+							System.out.println(s1);
+							return true;
 
+						}
 					}
 				}
 			}

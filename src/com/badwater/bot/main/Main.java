@@ -26,7 +26,7 @@ public class Main {
 			   .addListener(new LearnerListener())
 				      //.addListener(new GameDevBotListener())
 			   .addAutoJoinChannel("#badwater")
-			   .addAutoJoinChannel("#reddit-gamedev")
+				      //.addAutoJoinChannel("#reddit-gamedev")
 			   .buildConfiguration();
 		bot = new BadwaterBot(c);
 		bot.startBot();

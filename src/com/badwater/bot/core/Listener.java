@@ -62,9 +62,12 @@ public class Listener extends ListenerAdapter {
 					if (!c.equals(null)) {
 
 						boolean Authorization = true;
-						if (c.requiresAuthentication() && !isUserAuthorized(e, c)) {
-							Authorization = false;
+						if (c.requiresAuthentication()) {
+
+							Authorization = isUserAuthorized(e, c);
 						}
+
+						System.out.println(e.getUser().getNick() + ": " + Authorization);
 						if (Authorization) {
 							c.exec(e);
 						}
@@ -112,7 +115,6 @@ public class Listener extends ListenerAdapter {
 		for (Command c : commands) {
 			if (command.equalsIgnoreCase(c.getAlias())) {
 				success = true;
-				break;
 			}
 		}
 		return success;
