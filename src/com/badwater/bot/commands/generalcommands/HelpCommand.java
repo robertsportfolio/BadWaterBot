@@ -99,6 +99,11 @@ public class HelpCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Prints The Available Commands, and their Usage");
 		helpStrings.add("Syntax: ?help");

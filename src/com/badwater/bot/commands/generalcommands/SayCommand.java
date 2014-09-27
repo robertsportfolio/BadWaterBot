@@ -59,6 +59,11 @@ public class SayCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Says <message> on <#channel>");
 		helpStrings.add("Syntax: ?Say <#channel name> <message> : Says Message To Channel.");

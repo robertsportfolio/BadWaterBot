@@ -81,6 +81,11 @@ public class NewsCommand implements Command<MessageEvent> {
 		return "Various News Functions";
 	}
 
+	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
 
 	@Override
 	public void addHelpStrings() {

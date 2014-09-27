@@ -55,4 +55,26 @@ public class bwFileReader {
 
 		return null;
 	}
+
+	public boolean isUserAuthorized(String userName, String cmdName) throws IOException {
+		System.out.println(cmdName);
+		System.out.println(userName);
+		read();
+		for (String s : lines) {
+			System.out.println(s);
+			String[] args = s.split("=");
+			if (args[0].equalsIgnoreCase(userName)) {
+				args = args[1].split(",");
+				for (String s1 : args) {
+					System.out.println(s1);
+					if ((s1.equalsIgnoreCase("all")) || s1.equalsIgnoreCase(cmdName)) {
+						System.out.println(s1);
+						return true;
+
+					}
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -64,6 +64,11 @@ public class GoogleCommand implements Command<MessageEvent> {
 		return "Uses The Google.  Quite Possibly For Maps";
 	}
 
+	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
 
 	@Override
 	public void addHelpStrings() {

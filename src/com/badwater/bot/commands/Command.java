@@ -21,6 +21,8 @@ public interface Command<e extends Event> {
 
 	public String getTopicString();
 
+	public boolean requiresAuthentication();
+
 	public void addHelpStrings();
 
 

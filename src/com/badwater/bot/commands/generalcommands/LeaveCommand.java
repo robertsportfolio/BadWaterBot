@@ -26,18 +26,16 @@ public class LeaveCommand implements Command<MessageEvent> {
 	@Override
 	public void exec(MessageEvent e) throws Exception {
 		String[] parsedCmd = helperFuncs.toArgs(e.getMessage());
-		String s = parsedCmd[0];
-		if (s.startsWith("?leave")) {
-			if (isThisAChannelName(parsedCmd[0])) {
-				if (s.contains(",")) {
-					s = s.substring(s.indexOf("#"), s.indexOf(",") - 1);
-					helperFuncs.debugGotHere(s);
-				}
+		String s = parsedCmd[1];
+		if (isThisAChannelName(s)) {
+			if (s.contains(",")) {
+				s = s.substring(s.indexOf("#"), s.indexOf(",") - 1);
+				helperFuncs.debugGotHere(s);
 			}
-			e.getChannel().send().message("Okay " + e.getUser().getNick() + " I'm Leaving: " + s);
-			e.getBot().sendRaw().rawLine("part " + s);
-			e.getBot().sendIRC().joinChannel("#badwater");
 		}
+		e.getChannel().send().message("Okay " + e.getUser().getNick() + " I'm Leaving: " + s);
+		e.getBot().sendRaw().rawLine("part " + s);
+		e.getBot().sendIRC().joinChannel("#badwater");
 	}
 
 
@@ -68,6 +66,11 @@ public class LeaveCommand implements Command<MessageEvent> {
 	@Override
 	public String getTopicString() {
 		return "Leaves A Channel";
+	}
+
+	@Override
+	public boolean requiresAuthentication() {
+		return true;
 	}
 
 	@Override

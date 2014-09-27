@@ -47,6 +47,11 @@ public class GameCommand implements Command<MessageEvent> {
 		return null;
 	}
 
+	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
 	public ArrayList<String> getHelpString() {
 		return null;
 	}

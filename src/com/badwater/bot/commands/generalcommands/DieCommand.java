@@ -40,50 +40,19 @@ public class DieCommand implements Command<MessageEvent> {
 		String[] parseMsg = helperFuncs.toArgs(e.getMessage());
 
 		String issuingUserName = e.getUser().getNick();
-		if (!checkAuthorizedUsers(issuingUser)) {
-			dennisNedry(e);
-			e.getChannel().send().kick(issuingUser, "Don't Fuck With The Bot!  " +
-				   "Please Note That Continued Abuse may result in the banhammer dropping.");
-			logger.log(e.getChannel().getName(),
-			           issuingUserName + " tried to shutdown the bot without authorization.");
+		if (parseMsg.length <= 1) {
+			logger.log(chanName, "Was Told To Quit By: " + issuingUserName);
 		}
-		else {
-
-			if (parseMsg.length <= 1) {
-				logger.log(chanName, "Was Told To Quit By: " + issuingUserName);
+		else if (parseMsg.length > 1) {
+			String reason = "";
+			for (int i = 1; i < parseMsg.length; i++) {
+				reason += parseMsg[i] + " ";
 			}
-			else if (parseMsg.length > 1) {
-				String reason = "";
-				for (int i = 1; i < parseMsg.length; i++) {
-					reason += parseMsg[i] + " ";
-				}
-				logger.log(chanName, "Was Told To Quit By: " + issuingUserName + "For: " + reason);
-			}
-
-			e.getChannel().send().message("Okay " + issuingUserName + " I'll Go Away Now.");
-			e.getBot().sendIRC().quitServer("Was Told To Go Away!");
+			logger.log(chanName, "Was Told To Quit By: " + issuingUserName + "For: " + reason);
 		}
-	}
 
-	private void dennisNedry(MessageEvent e) {
-		for (int i = 0; i < 10; i++) {
-			e.getUser().send().notice("AH, AH, AH!  You didn't say the magic word.");
-		}
-	}
-
-	private boolean checkAuthorizedUsers(User user) {
-		boolean userAuthorized = false;
-		System.out.println(user.getNick());
-		for (String authUserName : in.getLines()) {
-			System.out.print(authUserName);
-			if (user.getNick().equalsIgnoreCase(authUserName) && user.isVerified()) {
-				userAuthorized = true;
-				break;
-			}
-
-
-		}
-		return userAuthorized;
+		e.getChannel().send().message("Okay " + issuingUserName + " I'll Go Away Now.");
+		e.getBot().sendIRC().quitServer("Was Told To Go Away!");
 	}
 
 
@@ -105,6 +74,11 @@ public class DieCommand implements Command<MessageEvent> {
 	@Override
 	public String getTopicString() {
 		return "Kills The Bot";
+	}
+
+	@Override
+	public boolean requiresAuthentication() {
+		return true;
 	}
 
 	@Override

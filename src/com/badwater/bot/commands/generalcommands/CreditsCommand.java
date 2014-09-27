@@ -57,6 +57,11 @@ public class CreditsCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Prints the name of my creator");
 		helpStrings.add("Syntax: ?credits");

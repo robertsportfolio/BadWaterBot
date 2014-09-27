@@ -74,6 +74,11 @@ public class JoinCommand implements Command<MessageEvent> {
 	}
 
 	@Override
+	public boolean requiresAuthentication() {
+		return true;
+	}
+
+	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Joins a new Channel.");
 		helpStrings.add("Syntax: ?join #<channelName>");

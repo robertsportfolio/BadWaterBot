@@ -46,6 +46,11 @@ public class SourceCommand implements Command<MessageEvent> {
 		return "Prints The Source URL";
 	}
 
+	@Override
+	public boolean requiresAuthentication() {
+		return false;
+	}
+
 
 	@Override
 	public void addHelpStrings() {
