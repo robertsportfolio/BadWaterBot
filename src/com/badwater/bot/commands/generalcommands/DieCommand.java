@@ -1,7 +1,6 @@
 package com.badwater.bot.commands.generalcommands;
 
 import com.badwater.bot.commands.Command;
-import com.badwater.bot.helpers.Loggers.Logger;
 import com.badwater.bot.helpers.Readers.bwFileReader;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.User;
@@ -15,12 +14,10 @@ import java.util.ArrayList;
  */
 public class DieCommand implements Command<MessageEvent> {
 	private final bwFileReader in;
-	private final Logger       logger;
-	ArrayList<String> helpStrings = new ArrayList<String>();
 	private ArrayList<String> notesList = new ArrayList<String>();
+	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public DieCommand() throws IOException {
-		logger = new Logger("./Logs/ServerLogs/", 0);
 		in = new bwFileReader("./DB/Configs/.authUsers");
 		in.read();
 		addHelpStrings();
@@ -41,14 +38,12 @@ public class DieCommand implements Command<MessageEvent> {
 
 		String issuingUserName = e.getUser().getNick();
 		if (parseMsg.length <= 1) {
-			logger.log(chanName, "Was Told To Quit By: " + issuingUserName);
 		}
 		else if (parseMsg.length > 1) {
 			String reason = "";
 			for (int i = 1; i < parseMsg.length; i++) {
 				reason += parseMsg[i] + " ";
 			}
-			logger.log(chanName, "Was Told To Quit By: " + issuingUserName + "For: " + reason);
 		}
 
 		e.getChannel().send().message("Okay " + issuingUserName + " I'll Go Away Now.");

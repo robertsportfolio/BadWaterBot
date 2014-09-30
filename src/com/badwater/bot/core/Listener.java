@@ -2,7 +2,6 @@ package com.badwater.bot.core;
 
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.commands.generalcommands.*;
-import com.badwater.bot.helpers.Loggers.Logger;
 import com.badwater.bot.helpers.Readers.bwFileReader;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 public class Listener extends ListenerAdapter {
 	protected ArrayList<Command> commands = new ArrayList<>();
 	protected String prefix = "?";
-	private Logger logger;
 
 	public Listener() throws IOException {
 		commands.add(new DieCommand());
@@ -32,8 +30,33 @@ public class Listener extends ListenerAdapter {
 
 		//This must be the last command added
 		commands.add(new HelpCommand(this));
-		logger = new Logger("./Logs/IRC/", 1);
 
+	}
+
+	private Command getCommand(String command) {
+
+		for (Command c : commands) {
+			if (command.equalsIgnoreCase(c.getAlias())) {
+				return c;
+			}
+		}
+		//should never happen
+		return null;
+	}
+
+	private boolean isUserAuthorized(MessageEvent e, Command c) throws Exception {
+		return e.getUser().isVerified() && new bwFileReader("./DB/Configs/.authUsers").isUserAuthorized(
+			   e.getUser().getNick(), c.getAlias());
+	}
+
+	private boolean processCommands(String command) throws Exception {
+		boolean success = false;
+		for (Command c : commands) {
+			if (command.equalsIgnoreCase(c.getAlias())) {
+				success = true;
+			}
+		}
+		return success;
 	}
 
 	public void onMessage(MessageEvent e) throws Exception {
@@ -82,20 +105,7 @@ public class Listener extends ListenerAdapter {
 		}
 
 
-		logger.log("<" + userName + "> " + e.getMessage());
 	}
-
-	private Command getCommand(String command) {
-
-		for (Command c : commands) {
-			if (command.equalsIgnoreCase(c.getAlias())) {
-				return c;
-			}
-		}
-		//should never happen
-		return null;
-	}
-
 
 	public ArrayList<Command> getCommands() {
 		return commands;
@@ -103,21 +113,6 @@ public class Listener extends ListenerAdapter {
 
 	public String getPrefix() {
 		return prefix;
-	}
-
-	private boolean isUserAuthorized(MessageEvent e, Command c) throws Exception {
-		return e.getUser().isVerified() && new bwFileReader("./DB/Configs/.authUsers").isUserAuthorized(
-			   e.getUser().getNick(), c.getAlias());
-	}
-
-	private boolean processCommands(String command) throws Exception {
-		boolean success = false;
-		for (Command c : commands) {
-			if (command.equalsIgnoreCase(c.getAlias())) {
-				success = true;
-			}
-		}
-		return success;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.badwater.bot.core;
 
 //local imports
 
-import com.badwater.bot.Game.GameHandler;
 import com.badwater.bot.helpers.Readers.RSSReader;
 import org.pircbotx.Configuration;
 
@@ -17,10 +16,7 @@ import java.io.IOException;
 public class BadwaterBot extends BadwaterBotCore {
 	//Create a new RSS Reader for this bot
 	private RSSReader   reader      = new RSSReader();
-	//Create A Learner for This Bot
-	//private Learner learner;
-	//create a new game for this bot
-	private GameHandler gameHandler = new GameHandler();
+
 	private int gameNum;
 
 	public BadwaterBot(Configuration config) throws IOException, ClassNotFoundException {
@@ -31,13 +27,6 @@ public class BadwaterBot extends BadwaterBotCore {
 
 	}
 
-	public GameHandler getGameHandler() {
-		return gameHandler;
-	}
-
-	public int getGameNum() {
-		return gameNum;
-	}
 
 	public RSSReader getReader() {
 		return reader;
