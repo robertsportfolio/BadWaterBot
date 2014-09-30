@@ -5,19 +5,11 @@ import com.badwater.bot.commands.generalcommands.*;
 import com.badwater.bot.helpers.Authenticator.Authenticator;
 import com.badwater.bot.helpers.Loggers.Logger;
 import com.badwater.bot.helpers.helperFuncs;
-import com.badwater.bot.info.BotInfo;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.WaitForQueue;
-import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.events.MessageEvent;
-import org.pircbotx.hooks.events.PrivateMessageEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by irinix on 8/3/14.
@@ -25,30 +17,10 @@ import java.util.regex.Pattern;
 
 public class Listener extends ListenerAdapter {
 	protected ArrayList<Command> commands    = new ArrayList<>();
-	private   ArrayList<BotInfo> botRegistry = new ArrayList<BotInfo>();
 	protected String             prefix      = "?";
 	private Logger        logger;
 	private Authenticator authenticator;
 
-	private class QueueTask extends TimerTask {
-		private long count = 0;
-		private long increment;
-
-		public QueueTask(long pIncrement) {
-			count = 0;
-			increment = pIncrement;
-		}
-
-		@Override
-		public void run() {
-			count += increment;
-
-		}
-
-		public long getCount() {
-			return count;
-		}
-	}
 
 
 	public Listener() throws IOException {
@@ -71,73 +43,7 @@ public class Listener extends ListenerAdapter {
 
 	}
 
-	public void onJoin(JoinEvent e) throws InterruptedException {
 
-		//on a join event, wait for the user to announce itself as a bot.
-		e.respond(e.getUser().getHostmask());
-		String joiningNick = e.getUser().getNick();
-		String hostMask = e.getUser().getHostmask();
-		e.respond(joiningNick + " : " + hostMask);
-		e.getBot().sendIRC().message("irinix", joiningNick + " has joined a channel");
-
-		if (!joiningNick.equalsIgnoreCase(e.getBot().getNick())) {
-			String response = "";
-			Pattern p = Pattern.compile(".+/bot/.+$");
-			Matcher m = p.matcher(hostMask);
-			if (m.matches()) {
-				System.out.println(m.matches());
-
-			}
-		}
-		for(BotInfo b : botRegistry){
-			System.out.println(b.getName());
-			for(String s : b.getCaps()){
-				System.out.println(s);
-			}
-		}
-	}
-
-	private BotInfo getBotInfo(JoinEvent e, String pUserName, String pMsg) throws InterruptedException {
-		String response = "";
-		String msg = pMsg;
-		String userName = pUserName;
-		long TimeOut = 3000l;
-		long period = 20l;
-		Timer t = new Timer();
-		QueueTask q = new QueueTask(period);
-		e.getBot().sendIRC().message(userName, msg);
-		WaitForQueue queue = new WaitForQueue(e.getBot());
-		t.scheduleAtFixedRate(q, 0, period);
-		while (q.getCount() < TimeOut + period) {
-			System.out.println(q.getCount());
-			PrivateMessageEvent currEvent = queue.waitFor(PrivateMessageEvent.class);
-			if (!currEvent.getUser().getNick().equalsIgnoreCase(userName)) {
-				continue;
-			}
-			else if (msg.equalsIgnoreCase("SYN")) {
-				if (!currEvent.getMessage().equalsIgnoreCase("ACK")) {
-					currEvent.getBot().sendIRC().message(currEvent.getUser().getNick(), "Invalid Response");
-
-					response = null;
-					t.cancel();
-					queue.close();
-				}
-				else{
-					e.getBot().sendIRC().message("irinix", "Recieved ACK FROM: " + userName);
-				}
-			}
-			else if (msg.equalsIgnoreCase("CAPS")) {
-				response = currEvent.getMessage();
-				System.out.println("Recieved: " + response + " From: " + currEvent.getUser().getNick());
-				t.cancel();
-				queue.close();
-			}
-		}
-
-
-
-	return response;
-}
 
 
 	public void onMessage(MessageEvent e) throws Exception {

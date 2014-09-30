@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by irinix on 9/22/14.
@@ -25,11 +26,7 @@ public class bwFileReader {
 		try (BufferedReader in = new BufferedReader(new FileReader(pathToFile))) {
 			String line = "";
 			while ((line = in.readLine()) != null) {
-
-				//ignore comments
-				if (!line.startsWith("#")) {
-					lines.add(line);
-				}
+				lines.add(line);
 			}
 
 		}
@@ -56,9 +53,36 @@ public class bwFileReader {
 		return null;
 	}
 
+	public HashMap<String, String[]> getConfigData() throws IOException {
+		read();
+		String key = "";
+		HashMap<String, String[]> configData = new HashMap<String, String[]>();
+		for (String s : lines) {
+			String[] args1 = s.split("=");
+			key = args1[0];
+			args1 = args1[1].split(",");
+			configData.put(key, args1);
+		}
+
+		return configData;
+	}
+
+	public HashMap<String, String> getUsers() throws IOException {
+		read();
+		HashMap<String, String> userList = new HashMap<String, String>();
+		for (String s : lines) {
+			if (!s.startsWith("#")) {
+				String[] splitString = s.split("=");
+				String userName = splitString[0];
+				String commands = splitString[1];
+				userList.put(userName, commands);
+			}
+		}
+		return userList;
+	}
+
+
 	public boolean isUserAuthorized(String userName, String cmdName) throws IOException {
-		System.out.println(cmdName);
-		System.out.println(userName);
 		read();
 		for (String s : lines) {
 			System.out.println(s);

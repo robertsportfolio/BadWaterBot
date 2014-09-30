@@ -20,14 +20,15 @@ public class SayCommand implements Command<MessageEvent> {
 
 	private void addNoteStrings() {
 		noteList.add("I must be join'd to <#channel>");
+		noteList.add("If <#channel> is left blank, defaults to current Channel");
 	}
 
 	@Override
 	public void exec(MessageEvent event) throws Exception {
 		String[] args = helperFuncs.toArgs(event.getMessage());
 		if (!args[1].startsWith("#")) {
-			event.getUser().send().notice(
-				   "Sorry " + event.getUser().getNick() + " That is not a valid Channel Name");
+
+			event.getChannel().send().message(event.getMessage().substring(4).trim());
 		}
 		else {
 			String msg = "";

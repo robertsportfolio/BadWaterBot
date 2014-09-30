@@ -3,7 +3,7 @@ package com.badwater.bot.commands.gamecommands;
 import com.badwater.bot.Game.GameHandler;
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.core.BadwaterBot;
-import com.badwater.bot.core.GameListener;
+import com.badwater.bot.core.Listeners.GameListener;
 import org.pircbotx.hooks.events.MessageEvent;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package com.badwater.bot.commands.generalcommands;
 
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.helpers.Loggers.Logger;
-import com.badwater.bot.helpers.Readers.bwFileReader;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -14,15 +13,12 @@ import java.util.ArrayList;
  * Created by irinix on 8/3/14.
  */
 public class DieCommand implements Command<MessageEvent> {
-	private final bwFileReader in;
 	private final Logger       logger;
-	ArrayList<String> helpStrings = new ArrayList<String>();
 	private ArrayList<String> notesList = new ArrayList<String>();
+	ArrayList<String> helpStrings = new ArrayList<String>();
 
 	public DieCommand() throws IOException {
 		logger = new Logger("./Logs/ServerLogs/", 0);
-		in = new bwFileReader("./DB/Configs/.authUsers");
-		in.read();
 		addHelpStrings();
 		addNoteStrings();
 	}
@@ -38,13 +34,13 @@ public class DieCommand implements Command<MessageEvent> {
 		User issuingUser = e.getUser();
 		String chanName = e.getChannel().getName();
 		String[] parseMsg = helperFuncs.toArgs(e.getMessage());
-
+		String reason = "";
 		String issuingUserName = e.getUser().getNick();
 		if (parseMsg.length <= 1) {
 			logger.log(chanName, "Was Told To Quit By: " + issuingUserName);
 		}
 		else if (parseMsg.length > 1) {
-			String reason = "";
+
 			for (int i = 1; i < parseMsg.length; i++) {
 				reason += parseMsg[i] + " ";
 			}
@@ -52,7 +48,7 @@ public class DieCommand implements Command<MessageEvent> {
 		}
 
 		e.getChannel().send().message("Okay " + issuingUserName + " I'll Go Away Now.");
-		e.getBot().sendIRC().quitServer("Was Told To Go Away!");
+		e.getBot().sendIRC().quitServer(reason);
 	}
 
 

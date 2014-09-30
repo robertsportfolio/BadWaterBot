@@ -12,17 +12,17 @@ import java.util.ArrayList;
  * Created by irinix on 9/24/14.
  */
 public class bwFileWriter {
-
+	String filePath;
 	public bwFileWriter(String path) {
-
+		filePath = path;
 	}
 
-	public void writeToConfig(String configPath, String key, String[] values) throws IOException {
-		File file = new File(configPath);
+	public void writeToConfig(String key, String[] values) throws IOException {
+		File file = new File(filePath);
 		ArrayList<String> lines;
 		String editLine = "";
 		if (file.exists()) {
-			lines = new bwFileReader(configPath).getLines();
+			lines = new bwFileReader(filePath).getLines();
 
 			for (String s : lines) {
 				if (s.startsWith(key)) {
@@ -36,7 +36,7 @@ public class bwFileWriter {
 
 				for (String s : values) {
 					if (!editLine.contains(s)) {
-						editLine += "," + s;
+						editLine +="," + s;
 					}
 				}
 				lines.add(index, editLine);
@@ -54,7 +54,7 @@ public class bwFileWriter {
 		}
 		//if the file doesn't exist split our path into an array
 		else {
-			String[] pathToFile = configPath.split("\\/");
+			String[] pathToFile = filePath.split("\\/");
 			//pathToFile.length - 1 so that we only check the path.
 			boolean success = false;
 			for (int i = 0; i < pathToFile.length - 2; i++) {

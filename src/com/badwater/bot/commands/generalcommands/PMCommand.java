@@ -40,7 +40,7 @@ public class PMCommand implements Command<MessageEvent> {
 
 	@Override
 	public String getAlias() {
-		return "tell";
+		return "pm";
 	}
 
 	@Override
@@ -60,13 +60,13 @@ public class PMCommand implements Command<MessageEvent> {
 
 	@Override
 	public boolean requiresAuthentication() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void addHelpStrings() {
 		helpStrings.add("Use: Says <message> to <user>");
-		helpStrings.add("Syntax: ?tell <user> <message> : Says Message To User.");
+		helpStrings.add("Syntax: ?pm <user> <message> : Says Message To User.");
 
 	}
 

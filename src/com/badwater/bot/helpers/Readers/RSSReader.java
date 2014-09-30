@@ -119,6 +119,7 @@ public class RSSReader {
 			}
 			else {
 				mue.printStackTrace();
+
 			}
 		}
 		//news source aggregating.

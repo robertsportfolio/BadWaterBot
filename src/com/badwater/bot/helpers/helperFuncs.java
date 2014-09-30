@@ -1,5 +1,6 @@
 package com.badwater.bot.helpers;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +14,11 @@ public class helperFuncs {
 	public static void debugGotHere(String s) {
 		System.out.println("Got Here\t====\t" + s);
 	}
+	public static HashMap<String, HashMap<String, String>> parseJoinEvent(String joinMsg){
+		HashMap<String, HashMap<String, String>> usrInfo = new HashMap<String, HashMap<String, String>>();
 
+		return usrInfo;
+	}
 	public static int nextIntInRange(int max, int min) {
 		int retVal = random.nextInt((max - min) + 1) + min;
 		return retVal;

@@ -1,7 +1,7 @@
 package com.badwater.bot.commands.generalcommands;
 
 import com.badwater.bot.commands.Command;
-import com.badwater.bot.core.Listener;
+import com.badwater.bot.core.Listeners.Listener;
 import com.badwater.bot.helpers.helperFuncs;
 import org.pircbotx.User;
 import org.pircbotx.hooks.events.MessageEvent;
@@ -36,6 +36,7 @@ public class HelpCommand implements Command<MessageEvent> {
 		if (parsedMsg.length == 1) {
 			issuingUser.send().notice(divider);
 			issuingUser.send().notice("Available Commands Are:");
+			issuingUser.send().notice(divider);
 			for (Command c : commands) {
 				String fullCommand = l.getPrefix() + c.getAlias() + " - " + c.getTopicString();
 				issuingUser.send().notice("\t\t" + fullCommand);
