@@ -1,4 +1,4 @@
-package com.badwater.bot.core;
+package com.badwater.bot.core.Listeners;
 
 import com.badwater.bot.commands.Command;
 import com.badwater.bot.commands.gamecommands.AttackCommand;

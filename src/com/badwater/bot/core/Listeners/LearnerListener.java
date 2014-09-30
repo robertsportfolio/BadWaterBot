@@ -1,5 +1,6 @@
-package com.badwater.bot.core;
+package com.badwater.bot.core.Listeners;
 
+import com.badwater.bot.core.BadwaterBot;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
@@ -17,9 +18,9 @@ public class LearnerListener extends ListenerAdapter {
 	}
 
 	public void onMessage(MessageEvent e) throws IOException, ClassNotFoundException {
-		if ( !e.getMessage ().startsWith ( "?" ) || !e.getMessage().startsWith("!") ) {
-			b = (BadwaterBot) e.getBot ();
-			String msg1 = "New Markov Chain Acquired From String \"" + e.getMessage () + "\"";
+		if (!e.getMessage().startsWith("?") || !e.getMessage().startsWith("!")) {
+			b = (BadwaterBot) e.getBot();
+			String msg1 = "New Markov Chain Acquired From String \"" + e.getMessage() + "\"";
 			//b.getLearner ().learn ( ( e.getMessage () ) );
 			System.out.println ( msg1 );
 		}
