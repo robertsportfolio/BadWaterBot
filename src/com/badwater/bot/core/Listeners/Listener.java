@@ -16,11 +16,10 @@ import java.util.ArrayList;
  */
 
 public class Listener extends ListenerAdapter {
-	protected ArrayList<Command> commands    = new ArrayList<>();
-	protected String             prefix      = "?";
+	protected ArrayList<Command> commands = new ArrayList<>();
+	protected String             prefix   = "?";
 	private Logger        logger;
 	private Authenticator authenticator;
-
 
 
 	public Listener() throws IOException {
@@ -42,8 +41,6 @@ public class Listener extends ListenerAdapter {
 		logger = new Logger("./Logs/IRC/", 1);
 
 	}
-
-
 
 
 	public void onMessage(MessageEvent e) throws Exception {
@@ -69,28 +66,29 @@ public class Listener extends ListenerAdapter {
 				}
 				else {
 					Command c = getCommand(command);
+					//if c exists
 					if (!c.equals(null)) {
-						boolean Authorization = true;
+						//if c
 						if (c.requiresAuthentication()) {
-
-							Authorization = authenticator.isUserAuthorizedForCmd(userName, command);
-						}
-						System.out.println(e.getUser().getNick() + ": " + Authorization);
-						if (Authorization) {
-							c.exec(e);
+							if (authenticator.isUserAuthorizedForCmd(userName, command)) {
+								c.exec(e);
+							}
+							else {
+								e.getChannel().send().message(
+									   "I'm sorry, " + e.getUser().getNick() + " I can't let you do that!");
+							}
 						}
 						else {
-							e.getChannel().send().message(
-								   "I'm sorry, " + e.getUser().getNick() + " I can't let you do that!");
+							c.exec(e);
 						}
 
 					}
 				}
 			}
+
+
+			logger.log("<" + userName + "> " + e.getMessage());
 		}
-
-
-		logger.log("<" + userName + "> " + e.getMessage());
 	}
 
 	private Command getCommand(String command) {

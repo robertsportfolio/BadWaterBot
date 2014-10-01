@@ -20,9 +20,11 @@ public class Authenticator {
 
 	public boolean isUserAuthorizedForCmd(String userName, String command) {
 		boolean authorized = false;
-		if (Users.containsKey(userName)) {
+		System.out.println(Users.get(userName));
+		if (Users.containsKey(userName.toLowerCase())) {
 			if (Users.containsKey(userName)) {
 				if(Users.get(userName).equalsIgnoreCase("all")){
+					System.out.println(userName + " : " + command + " : " + authorized);
 					authorized = true;
 				}
 				else{

@@ -14,7 +14,8 @@ public class bwTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		count+=20l;
+		count+=200l;
+
 	}
 
 	public long getCount(){

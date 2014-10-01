@@ -1,5 +1,7 @@
 package com.badwater.bot.core;
 
+import com.badwater.bot.info.BotInfo;
+import com.badwater.bot.info.BotRegistry.BotRegistry;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -11,7 +13,7 @@ import java.io.IOException;
  */
 public abstract class BadwaterBotCore extends PircBotX {
 
-
+	private BotRegistry botRegistry;
 	protected Configuration config;
 	protected String        version;
 
@@ -23,6 +25,10 @@ public abstract class BadwaterBotCore extends PircBotX {
 	public BadwaterBotCore(Configuration<? extends PircBotX> configuration) {
 		super(configuration);
 		version = "1.0";
+		botRegistry = new BotRegistry();
+		String[] caps = {"CMD"};
+		BotInfo myInfo = new BotInfo().createBotInfo(this.getNick(),caps );
+		botRegistry.setLocalInfo(myInfo);
 	}
 
 
@@ -51,6 +57,8 @@ public abstract class BadwaterBotCore extends PircBotX {
 		this.sendIRC().quitServer("Was Told To Go Away By" + sender);
 		this.stopBotReconnect();
 	}
+
+
 
 
 	public String getVersion() {

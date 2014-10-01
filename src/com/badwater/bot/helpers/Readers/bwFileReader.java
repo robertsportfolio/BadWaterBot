@@ -71,12 +71,14 @@ public class bwFileReader {
 		read();
 		HashMap<String, String> userList = new HashMap<String, String>();
 		for (String s : lines) {
-			if (!s.startsWith("#")) {
+			//if s is not blank, and is not a comment and check for the equals sign.
+			// If it's not there, throw out the line
+			if(!s.equals("") && !s.startsWith("#") && s.contains("=") ){
+				System.out.println(s);
 				String[] splitString = s.split("=");
-				String userName = splitString[0];
-				String commands = splitString[1];
-				userList.put(userName, commands);
+				userList.put(splitString[0], splitString[1]);
 			}
+
 		}
 		return userList;
 	}
