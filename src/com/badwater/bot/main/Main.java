@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String args[]) throws IOException, IrcException, ClassNotFoundException {
 		Configuration c = new Configuration.Builder().setServerHostname("chat.freenode.net")
-			   .setName("BadWater_Test").setAutoNickChange(true).addAutoJoinChannel("#testroom01").addListener(
+			   .setName("BadWater_Test").setNickservPassword("givem3thecookie").setAutoNickChange(true).addAutoJoinChannel("#testroom01").addListener(
 					 new Listener()).setLogin("BW_TESTBOT").buildConfiguration();
 		bot = new BadwaterBot(c);
 		bot.getConfiguration().getListenerManager().addListener(new BotInfoListener(bot));

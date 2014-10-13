@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
  */
 public class BotInfoListener extends ListenerAdapter {
 
-	private        boolean synReceived = false;
 	private static Timer   t           = new Timer();
 	ImmutableSortedSet<User> users;
 	private BadwaterBot bot;
@@ -28,8 +27,9 @@ public class BotInfoListener extends ListenerAdapter {
 	}
 
 	public void onJoin(JoinEvent e) throws InterruptedException {
-		String joiningNick = e.getUser().getNick();
-		String hostMask = e.getUser().getHostmask();
+		User joiningUser = e.getUser();
+		String joiningNick = joiningUser.getNick();
+		String hostMask = joiningUser.getHostmask();
 
 		Pattern p = Pattern.compile(".+/bot/.+$");
 
@@ -44,6 +44,7 @@ public class BotInfoListener extends ListenerAdapter {
 
 			users = e.getChannel().getUsers();
 
+			private boolean synReceived = false;
 			t.scheduleAtFixedRate(q, 0, period);
 			//wait ten seconds for "SYN
 			while (q.getCount() < timeOut) {
@@ -51,7 +52,6 @@ public class BotInfoListener extends ListenerAdapter {
 
 				long timeLeft = (timeOut - q.getCount()) / 1000;
 				if (!synReceived) {
-					System.out.println("Syn Not Recieved.  Waiting: " + timeLeft + " More Seconds");
 					continue;
 
 				}
@@ -62,18 +62,19 @@ public class BotInfoListener extends ListenerAdapter {
 					break;
 				}
 			}
+			//stop the timer.
+			t.cancel();
 			if (!synReceived) {
 				System.out.println("Syn Not Recieved, pinging Bots!");
-				//stop the timer.
-				t.cancel();
+
 				//check the userlist for bots.
 				for (User u : users) {
 					Matcher m = p.matcher(u.getHostmask());
 					//if a bot is found by hostMask
 					if (m.matches()) {
 						//send Syn()
-						sendSyn(u);
-						if (WaitForReply(u, "ack")) {
+						System.out.println("sending SYN to: " + u.getNick());
+						if(sendSyn(u)){
 							sendCaps(u);
 						}
 						else {
@@ -89,13 +90,10 @@ public class BotInfoListener extends ListenerAdapter {
 
 		//if somebody else is joining the channel, if they're a bot, send syn
 		else if (!joiningNick.equalsIgnoreCase(bot.getNick())) {
-			
-			Matcher m = p.matcher(hostMask);
-			if (m.matches()) {
-				System.out.println(m.matches());
-				if(sendSyn(e.getUser())){
-					sendCapsRequest(e.getUser());
-				}
+			System.out.println("Sending SYN to: " + joiningNick);
+			Matcher m = p.matcher(e.getUser().getHostmask());
+			if (m.matches()&& sendSyn(e.getUser())){
+				System.out.println("Received ACK from: " + joiningNick);
 			}
 
 		}
@@ -118,23 +116,17 @@ public class BotInfoListener extends ListenerAdapter {
 	}
 
 	public void onPrivateMessage(PrivateMessageEvent e) throws InterruptedException {
+		//reset SynReceived;
 
 		if (e.getMessage().equalsIgnoreCase("SYN")) {
-			synReceived = true;
+
 			sendACK(e.getUser());
 		}
-		if (synReceived) {
-			if (e.getMessage().equalsIgnoreCase("CAPS")) {
-				sendCaps(e.getUser());
-				//reset SYNReceived
-				synReceived = false;
-			}
 
-		}
 	}
 
 	private void sendCaps(User u) throws InterruptedException {
-		String capsReply = "NONE";
+		u.send().message("NONE");
 	}
 
 	private boolean WaitForReply(User u, String reply) throws InterruptedException {
