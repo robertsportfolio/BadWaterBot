@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file:///usr/lib/jvm/java-7-oracle/db/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file:///usr/lib/jvm/java-7-oracle/db/lib" recursive="false" />
+  </library>
+</component>

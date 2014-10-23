@@ -4,6 +4,7 @@ import com.badwater.bot.helpers.Readers.bwFileReader;
 import com.badwater.bot.helpers.Writers.bwFileWriter;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.HashMap;
 
 /**
@@ -13,7 +14,8 @@ public class Authenticator {
 	private final bwFileWriter userConfigWriter;
 	private HashMap<String, String> Users = new HashMap<String, String>();
 
-	public Authenticator() throws IOException {;
+public Authenticator(Connection dbConn) throws IOException {
+	;
 		userConfigWriter = new bwFileWriter("./DB/Configs/.authUsers");
 		Users = new bwFileReader("./DB/Configs/.authUsers").getUsers();
 	}
